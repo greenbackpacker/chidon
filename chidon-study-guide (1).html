@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chidon HaTanakh 2026 – Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5ead6;
+    --parchment-dark: #e8d5b0;
+    --ink: #2a1a0a;
+    --ink-light: #5c3d1e;
+    --gold: #b8860b;
+    --gold-light: #d4a017;
+    --gold-pale: #f0d080;
+    --blue-deep: #1a3a5c;
+    --blue-mid: #2d5a8e;
+    --red-deep: #8b1a1a;
+    --green-deep: #1a4a2a;
+    --green-mid: #2d7a4a;
+    --shadow: rgba(42,26,10,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a0f05;
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(180,120,40,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(100,60,20,0.1) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    text-align: center;
+    padding: 40px 20px 32px;
+    background: linear-gradient(160deg, #2a1a0a 0%, #1a0f05 100%);
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '✦';
+    position: absolute;
+    font-size: 200px;
+    color: rgba(184,134,11,0.04);
+    top: -40px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .header-heb {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-shadow: 0 2px 12px rgba(212,160,23,0.4);
+  }
+  .header-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(13px, 2.5vw, 18px);
+    color: var(--parchment-dark);
+    margin-top: 8px;
+    font-style: italic;
+    letter-spacing: 0.08em;
+  }
+  .header-year {
+    display: inline-block;
+    margin-top: 14px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 5px 18px;
+    border-radius: 2px;
+  }
+  .header-date {
+    color: var(--gold-pale);
+    font-size: 13px;
+    margin-top: 10px;
+    opacity: 0.8;
+    font-style: italic;
+  }
+
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    background: #0d0700;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .nav-tab {
+    flex: 1 1 auto;
+    padding: 9px 14px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: var(--parchment-dark);
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--gold-light); border-color: rgba(184,134,11,0.3); }
+  .nav-tab.active {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  /* ===== SECTION PANELS ===== */
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  /* ===== SCROLL AREA ===== */
+  .scroll-area {
+    max-height: 68vh;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  .scroll-area::-webkit-scrollbar { width: 6px; }
+  .scroll-area::-webkit-scrollbar-track { background: #1a0f05; }
+  .scroll-area::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ===== BOOK GROUP ===== */
+  .book-group {
+    background: var(--parchment);
+    border-radius: 4px;
+    border-left: 5px solid var(--gold);
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px var(--shadow);
+  }
+  .book-group.blue { border-left-color: var(--blue-mid); }
+  .book-group.red { border-left-color: var(--red-deep); }
+  .book-group.green { border-left-color: var(--green-mid); }
+
+  .book-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    cursor: pointer;
+    background: var(--parchment-dark);
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .book-header:hover { background: #dcc89a; }
+
+  .book-title-wrap { display: flex; align-items: center; gap: 10px; }
+  .book-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .book-badge.blue { background: var(--blue-deep); color: white; }
+  .book-badge.red { background: var(--red-deep); color: white; }
+  .book-badge.green { background: var(--green-deep); color: white; }
+
+  .book-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .book-heb {
+    font-size: 15px;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+  .toggle-icon {
+    font-size: 18px;
+    color: var(--ink-light);
+    transition: transform 0.25s;
+    line-height: 1;
+  }
+  .book-group.open .toggle-icon { transform: rotate(180deg); }
+
+  .book-body { display: none; padding: 0; }
+  .book-group.open .book-body { display: block; }
+
+  /* ===== CHAPTER CARDS ===== */
+  .chapter-card {
+    border-bottom: 1px solid var(--parchment-dark);
+    padding: 16px 18px;
+    transition: background 0.12s;
+  }
+  .chapter-card:last-child { border-bottom: none; }
+  .chapter-card:hover { background: rgba(184,134,11,0.06); }
+
+  .chapter-ref {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chapter-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: rgba(184,134,11,0.15);
+    color: var(--ink-light);
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .chapter-summary {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #3d2a10;
+  }
+  .chapter-summary strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Key facts list */
+  .key-facts {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(184,134,11,0.08);
+    border-radius: 3px;
+    border-left: 3px solid var(--gold-pale);
+  }
+  .key-facts-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+  .key-facts ul {
+    list-style: none;
+    padding: 0;
+  }
+  .key-facts li {
+    font-size: 13px;
+    color: #3d2a10;
+    padding: 2px 0 2px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .key-facts li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    font-size: 7px;
+    top: 6px;
+    color: var(--gold);
+  }
+
+  /* Context box */
+  .context-box {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(26,58,92,0.07);
+    border-radius: 3px;
+    border-left: 3px solid var(--blue-mid);
+  }
+  .context-box .ctx-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-deep);
+    margin-bottom: 4px;
+  }
+  .context-box p {
+    font-size: 13px;
+    color: #1a2a3a;
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #0d0700;
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+  }
+  .progress-label { color: var(--gold-pale); font-size: 13px; font-style: italic; }
+  .progress-count { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+  .progress-bar-wrap {
+    background: #0d0700;
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 4px;
+    padding: 4px 16px 10px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .prog-seg {
+    flex: 1 0 8px;
+    height: 8px;
+    background: rgba(184,134,11,0.2);
+    border-radius: 2px;
+    transition: background 0.3s;
+  }
+  .prog-seg.done { background: var(--gold); }
+
+  /* ===== QUIZ MODE ===== */
+  .quiz-container {
+    background: var(--parchment);
+    border-radius: 4px;
+    padding: 28px 26px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  .quiz-intro {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .quiz-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .quiz-intro p {
+    color: var(--ink-light);
+    font-size: 15px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .quiz-settings { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
+  .quiz-filter-btn {
+    padding: 8px 18px;
+    border: 2px solid var(--parchment-dark);
+    border-radius: 2px;
+    background: white;
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .quiz-filter-btn:hover, .quiz-filter-btn.sel {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .start-quiz-btn {
+    display: inline-block;
+    padding: 13px 38px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 3px 10px rgba(184,134,11,0.3);
+  }
+  .start-quiz-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .quiz-question-area { display: none; }
+  .quiz-q-num {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+  .quiz-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--parchment-dark);
+  }
+  .quiz-choices { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .quiz-choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid var(--parchment-dark);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: white;
+  }
+  .quiz-choice:hover { border-color: var(--gold); background: #fffdf5; }
+  .quiz-choice.correct { border-color: var(--green-mid); background: #e8f5ee; }
+  .quiz-choice.wrong { border-color: var(--red-deep); background: #fdf0f0; }
+  .quiz-choice.reveal-correct { border-color: var(--green-mid); background: #e8f5ee; }
+  .choice-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 22px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .choice-text { font-size: 14px; color: var(--ink); line-height: 1.5; }
+  .quiz-feedback {
+    padding: 14px 16px;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .quiz-feedback.correct { background: #e8f5ee; border-left: 4px solid var(--green-mid); color: var(--green-deep); display: block; }
+  .quiz-feedback.wrong { background: #fdf0f0; border-left: 4px solid var(--red-deep); color: var(--red-deep); display: block; }
+  .quiz-next-btn {
+    padding: 10px 28px;
+    background: var(--blue-deep);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: none;
+    transition: background 0.15s;
+  }
+  .quiz-next-btn:hover { background: var(--blue-mid); }
+  .quiz-score-wrap {
+    display: none;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .score-label { font-size: 16px; color: var(--ink-light); margin: 8px 0 20px; }
+  .score-msg { font-size: 15px; color: var(--ink); margin-bottom: 24px; font-style: italic; }
+
+  /* ===== TANAKH BOOKS LIST ===== */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .books-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    text-align: center;
+    letter-spacing: 0.1em;
+    margin: 16px 0 10px;
+    padding: 8px 0;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .book-item {
+    background: var(--parchment);
+    border-radius: 3px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+  .book-item-en { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .book-item-heb { font-size: 14px; color: var(--ink-light); font-style: italic; }
+
+  /* ===== ROUND INFO ===== */
+  .round-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+  .round-card {
+    background: var(--parchment);
+    border-radius: 4px;
+    padding: 18px 20px;
+    box-shadow: 0 3px 10px var(--shadow);
+    border-top: 4px solid var(--gold);
+  }
+  .round-card.r2 { border-top-color: var(--blue-mid); }
+  .round-card.r3 { border-top-color: var(--red-deep); }
+  .round-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .round-card p { font-size: 14px; color: var(--ink-light); line-height: 1.6; }
+  .round-card .points {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .nav-tab { font-size: 11px; padding: 7px 8px; }
+    .book-name { font-size: 15px; }
+    .chapter-title { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <header class="site-header">
+    <div class="header-heb">חידון התנ״ך</div>
+    <div class="header-sub">Sager Solomon Schechter Day School</div>
+    <div class="header-year">2026 STUDY GUIDE</div>
+    <div class="header-date">Competition: Wednesday, April 22, 2026 · Yom Ha'atzma'ut · 2:00 PM</div>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+    <button class="nav-tab" onclick="showTab('chumash')">Chumash</button>
+    <button class="nav-tab" onclick="showTab('maftir')">Maftir Readings</button>
+    <button class="nav-tab" onclick="showTab('neviim')">Nevi'im</button>
+    <button class="nav-tab" onclick="showTab('ketuvim')">Ketuvim</button>
+    <button class="nav-tab" onclick="showTab('books')">Books of Tanakh</button>
+    <button class="nav-tab" onclick="showTab('quiz')">📖 Quiz Me</button>
+  </nav>
+
+  <!-- ======== OVERVIEW ======== -->
+  <div id="tab-overview" class="section-panel active">
+    <div class="round-cards">
+      <div class="round-card">
+        <h3>Round 1 · Chumash</h3>
+        <p>Questions about characters, plot lines, and special maftir Torah readings. <strong>Multiple choice on a whiteboard</strong> — you have 6 seconds to hold up your answer.</p>
+        <span class="points">5 points per correct answer</span>
+      </div>
+      <div class="round-card r2">
+        <h3>Round 2 · Nevi'im &amp; Ketuvim</h3>
+        <p>Questions about the Prophets and Writings passages in this packet — content AND when/why each is read on a particular Shabbat or holiday. <strong>Multiple choice.</strong></p>
+      </div>
+      <div class="round-card r3">
+        <h3>Round 3 · Special Sources</h3>
+        <p>Questions from <strong>maftir readings, haftarah readings, and Eichah</strong>. May draw on any part of Tanakh in your guide. Multiple choice.</p>
+      </div>
+    </div>
+    <div style="background:var(--parchment);border-radius:4px;padding:18px 20px;box-shadow:0 3px 10px var(--shadow);font-size:14px;color:var(--ink-light);line-height:1.8;">
+      <strong style="color:var(--ink);font-family:'Playfair Display',serif;font-size:16px;">🏆 Prizes</strong><br>
+      Winner receives <strong>$54</strong> toward your Israel trip fund · <strong>$54</strong> to an organization of your choice · <strong>Ice cream</strong> for your kehillah!
+      <br><br>
+      <strong style="color:var(--ink);">Tiebreaker:</strong> More questions from the guide, then write as many books of Tanakh (Hebrew or English) as you can.
+    </div>
+  </div>
+
+  <!-- ======== CHUMASH ======== -->
+  <div id="tab-chumash" class="section-panel">
+    <div class="scroll-area" id="chumash-scroll">
+
+      <!-- BERESHIT -->
+      <div class="book-group" id="bg-bereshit">
+        <div class="book-header" onclick="toggleBook('bg-bereshit')">
+          <div class="book-title-wrap">
+            <span class="book-badge">Torah</span>
+            <span class="book-name">Bereshit</span>
+            <span class="book-heb">בְּרֵאשִׁית · Genesis</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 4 <span class="chapter-tag">Cain &amp; Abel Aftermath / Seth's Line</span></div>
+            <div class="chapter-title">Aftermath of the First Murder &amp; the Line of Seth</div>
+            <div class="chapter-summary">
+              After killing Abel, <strong>Cain</strong> is cursed by God to be a "restless wanderer" on the earth. Cain protests that the punishment is too great — anyone who finds him will kill him. God places a protective <strong>mark on Cain</strong> so that no one will slay him. Cain settles in the land of <strong>Nod ("wandering"), east of Eden</strong>, and builds a city named after his son <strong>Enoch</strong>. His descendant <strong>Lamech</strong> boasts of killing a man for wounding him — foreshadowing the violence that corrupts humanity. Meanwhile, Adam and Eve have another son: <strong>Seth</strong> ("appointed"), who is born to replace Abel. Seth has a son named <strong>Enosh</strong>. The chapter ends noting that it was during Enosh's time that people <em>began to call upon the name of God (יְהוָה)</em>.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Cain's mark = protection, not punishment</li>
+                <li>Cain's city = named "Enoch" after his son</li>
+                <li>Lamech = first bigamist; boasts of killing a young man</li>
+                <li>Seth = replaces Abel; his son is Enosh</li>
+                <li>Calling on God's name begins in Enosh's generation</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 6:1–22 <span class="chapter-tag">Corruption / God's Warning to Noah</span></div>
+            <div class="chapter-title">Humanity's Corruption &amp; God Chooses Noah</div>
+            <div class="chapter-summary">
+              The <strong>"sons of God" (b'nei ha-Elohim)</strong> take human women as wives — a mysterious passage often debated. God sees that human wickedness is great and that <em>"every inclination of the human heart was only evil all the time."</em> God regrets creating humanity and decides to blot out all life. But <strong>Noah "found favor (חֵן) in God's eyes"</strong> — he is described as righteous (צַדִּיק) and blameless (תָּמִים) in his generation and "walked with God." God tells Noah the earth is filled with <strong>חָמָס (violence/lawlessness)</strong>. God instructs Noah to build an <strong>ark (תֵּיבָה)</strong> of cypress wood, coated inside and out with pitch, with specific dimensions: <strong>300 cubits long, 50 wide, 30 high</strong>. It must have a roof, a door, and <strong>three decks</strong>. God promises to establish a <strong>covenant (בְּרִית)</strong> with Noah. Noah is to bring his wife, his three sons, their wives, and <strong>two of every living creature</strong> onto the ark, plus food. <strong>Noah did everything exactly as God commanded.</strong>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Noah = righteous + blameless + walked with God</li>
+                <li>Ark dimensions: 300 × 50 × 30 cubits; 3 decks</li>
+                <li>Material: cypress wood (gofer), coated with pitch (כֹּפֶר)</li>
+                <li>God's reason for flood: חָמָס — violence/lawlessness</li>
+                <li>"Noah did all that God commanded him" (exact obedience)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 7:1–24 <span class="chapter-tag">The Flood</span></div>
+            <div class="chapter-title">The Flood Begins</div>
+            <div class="chapter-summary">
+              God tells Noah to enter the ark with his household. He is to take <strong>seven pairs (14) of every clean animal</strong> and <strong>one pair of every unclean animal</strong>. Rain will fall for <strong>40 days and 40 nights</strong>. Noah is <strong>600 years old</strong> when the flood begins. All board the ark: Noah, his wife, his three sons (<strong>Shem, Ham, Japheth</strong>), and their wives. The "windows of heaven" open and the "fountains of the great deep" burst — this is cosmic imagery of the waters above and below the earth returning to primordial chaos. The waters rise until they cover the highest mountains by <strong>15 cubits</strong>. <strong>All living creatures</strong> on dry land die — every person, animal, bird, and creeping thing. Only <strong>Noah and those with him in the ark</strong> survive. The flood waters prevail for <strong>150 days</strong>.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Clean animals: 7 pairs; unclean: 1 pair</li>
+                <li>Rain: 40 days and 40 nights</li>
+                <li>Noah's age at flood: 600 years old</li>
+                <li>Waters rose 15 cubits above the tallest mountains</li>
+                <li>Flood lasted 150 days total</li>
+                <li>Noah's sons: Shem, Ham, Japheth</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 8:1–22 <span class="chapter-tag">Waters Recede</span></div>
+            <div class="chapter-title">The Flood Recedes &amp; Noah Leaves the Ark</div>
+            <div class="chapter-summary">
+              God "remembered" Noah — the turning point. God sends a wind over the earth. The fountains and windows close. After 150 days, the ark rests on <strong>Mount Ararat</strong>. Mountains appear on the <strong>first day of the 10th month</strong>. After 40 more days, Noah opens a window and sends out a <strong>raven (עֹרֵב)</strong>, which flies back and forth. Then he sends out a <strong>dove (יוֹנָה)</strong>, which returns because there's no dry land. He waits 7 days and sends the dove again — it returns with an <strong>olive leaf (עֲלֵה זַיִת)</strong> in its mouth. He waits another 7 days; the dove flies out and <strong>does not return</strong>. Noah removes the covering of the ark and sees the ground is dry. God tells him to come out with all the animals. Noah builds an <strong>altar (מִזְבֵּחַ)</strong> and offers burnt offerings. God smells the "pleasing aroma" and resolves: <em>"Never again will I curse the ground because of humans… nor will I ever destroy all living creatures as I have done."</em> God establishes the regular seasons as a promise.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Ark rests on Mount Ararat</li>
+                <li>First bird sent: raven; Second: dove</li>
+                <li>Olive leaf = sign of dry land returning</li>
+                <li>Noah builds an altar — first act outside the ark</li>
+                <li>God promises never again to destroy all life</li>
+                <li>Regular seasons (seed-time/harvest, summer/winter) guaranteed</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 9:1–19 <span class="chapter-tag">Covenant, Rainbow, Noah's Sons</span></div>
+            <div class="chapter-title">The Noahide Covenant &amp; The Rainbow</div>
+            <div class="chapter-summary">
+              God blesses Noah and his sons with the same command as Adam: <em>"Be fruitful and multiply."</em> Now animals will <strong>fear humans</strong>. God permits eating meat, but <strong>not blood (נֶפֶשׁ)</strong> — blood is the life force. God establishes the principle: <em>"Whoever sheds human blood, by humans shall their blood be shed, for in the image of God was humanity made."</em> God establishes His <strong>covenant (בְּרִית)</strong> with Noah, his descendants, and <em>every living creature</em> — the broadest covenant in the Torah. The sign of this covenant is a <strong>rainbow (קֶשֶׁת)</strong> in the clouds. God says: when I see the rainbow, I will remember My covenant and the waters will never again destroy all flesh. The three sons of Noah are named: <strong>Shem, Ham, and Japheth</strong> — from them the entire earth was populated.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Permission to eat meat — but NOT blood</li>
+                <li>Murder = capital offense (image of God = sanctity of life)</li>
+                <li>Covenant includes humans AND every living creature</li>
+                <li>Rainbow = sign of the covenant</li>
+                <li>God's promise: never again flood to destroy all life</li>
+                <li>Shem, Ham, Japheth = ancestors of all nations</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 11:1–9 <span class="chapter-tag">Tower of Babel</span></div>
+            <div class="chapter-title">The Tower of Babel</div>
+            <div class="chapter-summary">
+              All humanity speaks <strong>one language (שָׂפָה אֶחָת)</strong>. They migrate eastward and settle in the land of <strong>Shinar (שִׁנְעָר)</strong>. They decide to build a <strong>city and a tower reaching the heavens</strong>, saying: <em>"Let us make a name for ourselves (נַעֲשֶׂה לָּנוּ שֵׁם)."</em> God "comes down" to see the city — ironic, since their great tower barely reaches God. God says: if they can do this as one people with one language, nothing will be beyond them. So God <strong>scatters them (הֵפִיץ)</strong> across the earth and <strong>confuses (בָּלַל) their language</strong> — this is the origin of the word <strong>Babel (בָּבֶל)</strong>. The building stops. This chapter explains the diversity of languages and nations.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Location: land of Shinar (=Babylonia/Mesopotamia)</li>
+                <li>Building material: bricks (not stone) and tar (not mortar)</li>
+                <li>Human goal: "make a name for ourselves"</li>
+                <li>God's response: scatter and confuse language</li>
+                <li>Babel (בָּבֶל) = "confused" — wordplay on Babylon</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Genesis 35:1–29 <span class="chapter-tag">Return to Beit El; Deaths of Rachel &amp; Yitzchak</span></div>
+            <div class="chapter-title">Return to Beit El &amp; Family Deaths</div>
+            <div class="chapter-summary">
+              God tells Jacob to go to <strong>Beit El (בֵּית אֵל)</strong> and build an altar — where God appeared to him when he fled Esau. Jacob tells his household to put away their <strong>foreign gods</strong>, purify themselves, and change their garments. He buries all the idols and earrings under the oak at <strong>Shechem</strong>. They travel to Beit El, and God appears again, reaffirming the name change from Jacob to <strong>Israel</strong> and repeating the promises of land and descendants. God also calls him <strong>El Shaddai (אֵל שַׁדַּי)</strong>. Jacob sets up a <strong>pillar (מַצֵּבָה)</strong> and pours oil on it. On the road from Beit El, <strong>Rachel</strong> goes into labor with <strong>Benjamin (בִּנְיָמִין)</strong> — her dying wish is to name him <strong>Ben-Oni</strong> ("son of my sorrow"), but Jacob calls him Benjamin ("son of the right hand/south"). Rachel dies and is buried on the road to Ephrath (Bethlehem); Jacob sets a pillar over her grave. Then <strong>Reuben</strong> lies with Bilhah (his father's concubine). The chapter closes with a list of Jacob's 12 sons and the death of <strong>Isaac (Yitzchak)</strong> at age <strong>180</strong>, buried by Esau and Jacob.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Jacob buries foreign gods at Shechem before going to Beit El</li>
+                <li>God renames Jacob "Israel" again here (also happened at Penuel)</li>
+                <li>Rachel's dying name for Benjamin: Ben-Oni; Jacob changes it</li>
+                <li>Rachel buried near Bethlehem (Ephrath) — NOT in the Cave of Machpelah</li>
+                <li>Reuben's sin with Bilhah — noted but not punished yet</li>
+                <li>Isaac dies at age 180; buried by both Esau and Jacob</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DEVARIM -->
+      <div class="book-group" id="bg-devarim">
+        <div class="book-header" onclick="toggleBook('bg-devarim')">
+          <div class="book-title-wrap">
+            <span class="book-badge">Torah</span>
+            <span class="book-name">Devarim</span>
+            <span class="book-heb">דְּבָרִים · Deuteronomy</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 1:1–33 <span class="chapter-tag">Learning from Our Past</span></div>
+            <div class="chapter-title">Moses' Retelling: The Journey &amp; the Spies</div>
+            <div class="chapter-summary">
+              Moses begins his farewell speech to the Israelites on the plains of Moab. He recounts how God commanded them to leave <strong>Horeb (Sinai)</strong> and go to Canaan. Moses recalls appointing <strong>leaders (שָׂרִים) and judges</strong> because the people were too numerous for him to lead alone — advice he received from his father-in-law Jethro (implied). He recounts how they traveled through the <strong>wilderness</strong>. Moses describes reaching <strong>Kadesh-barnea</strong> and sending the <strong>12 spies</strong>. The spies brought back good fruit but reported that the cities were fortified and the people were giants (<strong>Anakim</strong>). The people feared and refused to go in. God had promised: <em>"Do not be terrified or afraid of them — the LORD your God goes before you"</em> (verse 29). Yet the people did not trust God, who had carried them "as a father carries his son" through the wilderness.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Moses is speaking on the <strong>plains of Moab</strong> — this is all one long speech</li>
+                <li>He appointed judges "wise, understanding, and experienced"</li>
+                <li>The spies left from Kadesh-barnea</li>
+                <li>The Anakim = giants the people feared</li>
+                <li>God compared to a father carrying his child through the desert</li>
+                <li>Failing to trust God = the core sin reviewed here</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 8:1–18 <span class="chapter-tag">Gratitude / Birkat Hamazon</span></div>
+            <div class="chapter-title">Gratitude for the Land &amp; Source of Birkat HaMazon</div>
+            <div class="chapter-summary">
+              Moses warns the people: <em>remember the 40 years in the desert</em>. God humbled them, let them hunger, and fed them <strong>manna (מָן)</strong> — to teach that humans do not live by <strong>bread alone</strong> but by every word from God's mouth. Their clothes did not wear out; their feet did not swell. God disciplines like a father. Now they are about to enter a <strong>good land</strong> with water, grain, vines, figs, pomegranates, olive oil, honey, iron, and copper. <strong>Verse 10</strong> is the biblical source for <strong>Birkat HaMazon</strong>: <em>"And you shall eat and be satisfied and bless the LORD your God for the good land He gave you."</em> Moses' great warning: <strong>Do not forget God</strong> when you prosper. Do not say in your heart, "My own power and strength made this wealth." Remember: it is God who gives you the power to create wealth.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Verse 3: "not by bread alone" — humans live by God's word</li>
+                <li>Manna was a test of humility and dependence</li>
+                <li>Verse 10 = source for Birkat HaMazon (grace after meals)</li>
+                <li>The "good land" described in lush detail (7 species implied)</li>
+                <li>Key warning: prosperity leads to forgetting God</li>
+                <li>"My power made this wealth" = the danger Moses warns against</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 10:12–22 <span class="chapter-tag">Caring for the Stranger</span></div>
+            <div class="chapter-title">What God Asks of You &amp; Love for the Stranger</div>
+            <div class="chapter-summary">
+              Moses gives the essence of what God requires: <em>"And now, Israel, what does the LORD your God ask of you but to <strong>fear God, walk in His ways, love Him, serve Him with all your heart and soul</strong>, and observe God's commandments."</em> God does not need anything — the universe belongs to God. Yet God chose the patriarchs and their descendants in love. Moses commands: <strong>circumcise the foreskin of your heart</strong> (מוּל אֶת עָרְלַת לְבַבְכֶם) — be spiritually open, not stiff-necked. God is the God of gods and Lord of lords, who does not show favoritism or take bribes, who <strong>executes justice for the orphan and widow and loves the stranger (גֵּר)</strong>, giving him food and clothing. <em>"You shall love the stranger, for you were strangers in the land of Egypt."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Famous verse: fear, walk, love, serve, observe — the five-fold demand</li>
+                <li>"Circumcise your heart" = metaphor for spiritual openness</li>
+                <li>God of gods, Lord of lords — unique among ancient Near Eastern theology</li>
+                <li>God protects orphan, widow, and stranger</li>
+                <li>"Love the stranger — for you were strangers in Egypt"</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 11:13–21 <span class="chapter-tag">2nd Paragraph of Shema</span></div>
+            <div class="chapter-title">VeHayah Im Shamoa — Second Paragraph of the Shema</div>
+            <div class="chapter-summary">
+              This passage is the <strong>second paragraph of the Shema</strong>, recited twice daily. It sets up a conditional covenant: <strong>IF</strong> you love and serve God with all your heart and soul, THEN God will provide rain in its season — the <strong>early rain (יוֹרֶה)</strong> and <strong>late rain (מַלְקוֹשׁ)</strong> — and grain, wine, and oil. Your cattle will have grass. You will eat and be satisfied. BUT if you turn away to worship other gods, God's anger will burn and the sky will withhold rain. Therefore: <strong>write these words on your hearts, teach them to your children, speak of them at home and away, at bedtime and rising. Bind them as a sign on your hand and as frontlets between your eyes (tefillin). Write them on the doorposts of your house and gates (mezuzah).</strong>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>This IS the second paragraph of the Shema (recited daily)</li>
+                <li>Conditional structure: obey = rain; disobey = drought</li>
+                <li>Early rain (yoreh) + late rain (malkosh) = agricultural seasons</li>
+                <li>Commands: teach children, bind on hand/forehead, write on doorposts</li>
+                <li>These commands are the origins of tefillin and mezuzah</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 26:1–11 <span class="chapter-tag">Bikkurim</span></div>
+            <div class="chapter-title">First Fruits — Bikkurim Declaration</div>
+            <div class="chapter-summary">
+              When Israel enters the land and settles it, each person is to bring the <strong>first fruits (בִּכּוּרִים) of the soil</strong> to the central sanctuary. The priest will place the basket before the altar. The person then recites a famous declaration — called the <strong>"Arami Oved Avi" (אֲרַמִּי אֹבֵד אָבִי)</strong> passage: <em>"My father was a wandering Aramean. He went down to Egypt with few people and sojourned there… the Egyptians oppressed us… we cried out to God… God brought us out with a mighty hand and an outstretched arm, with great awe, signs, and wonders, and brought us to this place and gave us this land flowing with milk and honey."</em> The declaration concludes with presenting the basket to God and bowing. This passage is also the core of the Passover Haggadah's storytelling framework.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>Bikkurim = first fruits brought to the Temple (Shavuot connection)</li>
+                <li>"Arami Oved Avi" = the declaration recited with the basket</li>
+                <li>Covers: Aramean ancestor → Egypt → slavery → cry out → Exodus → Promised Land</li>
+                <li>This passage is the core script of the Passover Haggadah</li>
+                <li>Ends: rejoice with the Levite and stranger among you</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 30:11–20 <span class="chapter-tag">Choose Life</span></div>
+            <div class="chapter-title">The Torah Is Not Far Away — Choose Life!</div>
+            <div class="chapter-summary">
+              Moses declares that the commandment is <strong>not too hard, not far away</strong>. It is not in heaven (you don't need to send someone to bring it down); it is not across the sea. <em>"The word is very near you — in your mouth and in your heart to do it."</em> Moses sets before Israel <strong>life and good vs. death and evil</strong>. Choose life means: love God, obey His voice, cling to Him — for God is your life and the length of your days, to dwell in the land. Moses then presents the ultimate choice: <em>"I have set before you today life and death, blessing and curse — therefore <strong>choose life (וּבָחַרְתָּ בַּחַיִּים)</strong>"</em> — so that you and your children may live.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details to Remember</div>
+              <ul>
+                <li>"The Torah is not in heaven" = accessible to everyone</li>
+                <li>The word is "in your mouth and heart to do it"</li>
+                <li>Binary choice: life/good vs. death/evil</li>
+                <li>Famous phrase: <strong>וּבָחַרְתָּ בַּחַיִּים — "choose life"</strong></li>
+                <li>Choosing life = loving God + obeying + clinging to God</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======== MAFTIR ======== -->
+  <div id="tab-maftir" class="section-panel">
+    <div class="scroll-area">
+
+      <div class="book-group" id="bg-maftir">
+        <div class="book-header" onclick="toggleBook('bg-maftir')">
+          <div class="book-title-wrap">
+            <span class="book-badge">Special</span>
+            <span class="book-name">Four Special Maftir Readings</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Exodus 30:11–16 <span class="chapter-tag">Shabbat Shekalim · Before Adar</span></div>
+            <div class="chapter-title">The Half-Shekel (מַחֲצִית הַשֶּׁקֶל)</div>
+            <div class="chapter-summary">
+              When Moses takes a census of Israel, every man 20 years and older must give a <strong>half-shekel (מַחֲצִית הַשֶּׁקֶל)</strong> to God as an atonement offering. The rich shall not give more and the poor shall not give less — everyone equal before God. The money is used for the service of the Tent of Meeting and serves as a <strong>reminder (זִכָּרוֹן)</strong> before God to atone for the Israelites.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why It's Read</div>
+              <p>Read on the Shabbat immediately before (or on) Rosh Chodesh Adar — about a month before Purim. This reminds people of the half-shekel tax due for Temple upkeep before Nisan. Also thematically connected to Haman's attempt to pay shekels to destroy Israel (Esther 3:9).</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Every male 20+ must contribute (army-age census)</li>
+                <li>Amount: half a shekel (of the sanctuary standard)</li>
+                <li>Rich = poor; everyone gives the same</li>
+                <li>Purpose: atonement + support of the Mishkan</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Deuteronomy 25:17–19 <span class="chapter-tag">Shabbat Zachor · Shabbat Before Purim</span></div>
+            <div class="chapter-title">Remember Amalek! (זָכוֹר)</div>
+            <div class="chapter-summary">
+              Israel is commanded to <strong>remember (זָכוֹר)</strong> what <strong>Amalek</strong> did — how they attacked the weak and weary stragglers at the back of the Israelite camp when they came out of Egypt. When God gives Israel rest from all their enemies, they must <strong>blot out (מָחָה) the memory of Amalek</strong>. The passage ends with the paradox: <em>"Do not forget (לֹא תִשְׁכָּח)"</em> — you must remember to blot out memory.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why It's Read</div>
+              <p>Read on the Shabbat before Purim because Haman is identified as a descendant of Agag, king of Amalek. Reading this passage primes us for the Purim story as the ongoing battle against Amalek.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Amalek attacked the weak/weary at the REAR of the camp</li>
+                <li>Amalek had "no fear of God" — key character note</li>
+                <li>Command: blot out Amalek's memory</li>
+                <li>Paradox: "remember" AND "do not forget" — both in same passage</li>
+                <li>Haman = Agagite (descendant of Amalek's king)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Numbers 19:1–22 <span class="chapter-tag">Shabbat Parah · After Purim</span></div>
+            <div class="chapter-title">The Red Heifer (פָּרָה אֲדֻמָּה)</div>
+            <div class="chapter-summary">
+              God commands a completely <strong>red cow (פָּרָה אֲדֻמָּה)</strong> — without defect, never yoked — to be brought to Eleazar the priest. It is slaughtered outside the camp and burned with <strong>cedar wood, hyssop (אֵזוֹב), and crimson thread</strong>. The ashes are gathered and kept as <strong>"waters of lustration" (מֵי נִדָּה)</strong> — purification waters. Anyone who has become <strong>ritually impure through contact with a corpse</strong> is sprinkled with these waters on the third and seventh day to become pure. Paradoxically: the <em>priest who performs the purification becomes impure</em>, while the <em>impure person becomes pure</em>. This is considered the ultimate <strong>חֹק</strong> — a divine decree without rational explanation.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why It's Read</div>
+              <p>Read after Purim to prepare people for Passover. Anyone who had become impure through contact with a corpse needed to use the red heifer waters in time to become pure before the Passover offering. The reading is a reminder to prepare spiritually and ritually.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Red cow must be entirely red, without defect, never yoked</li>
+                <li>Burned with cedar wood, hyssop, and crimson thread</li>
+                <li>Ashes mixed with water = purification from corpse impurity</li>
+                <li>Great paradox: purifier becomes impure; impure person becomes pure</li>
+                <li>Classic example of a חֹק (unexplained divine law)</li>
+                <li>Sprinkled on days 3 and 7 of impurity</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Exodus 12:1–20 <span class="chapter-tag">Shabbat HaHodesh · Before Nisan</span></div>
+            <div class="chapter-title">Sanctification of the New Month &amp; Passover Laws</div>
+            <div class="chapter-summary">
+              God tells Moses and Aaron in Egypt: <em>"This month (Nisan) shall be for you the <strong>first of the months</strong> of the year."</em> On the <strong>10th of Nisan</strong>, each household must take a <strong>lamb (שֶׂה)</strong> — one per household (or share with a neighbor if the household is too small). The lamb must be a <strong>one-year-old male without blemish</strong>, taken from the sheep or goats. On the <strong>14th of Nisan</strong> at twilight (בֵּין הָעַרְבַּיִם), the community slaughters it. The blood is smeared on the <strong>two doorposts and the lintel</strong> of each house. The lamb is eaten roasted — not raw, not boiled — with <strong>matzah and bitter herbs (מְרֹרִים)</strong>. Nothing may be left until morning; anything left must be burned. You must eat it with your loins girded, sandals on, staff in hand — in haste. God will pass through Egypt and strike down the firstborn; the blood will be a sign and God will <strong>pass over (פָּסַח)</strong> those houses. Eat matzah for <strong>seven days</strong>; on the first day remove all leaven (חָמֵץ) from your houses. No leavened bread for 7 days.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why It's Read</div>
+              <p>Read on the Shabbat before Rosh Chodesh Nisan (or on it) to announce the month of Passover and remind the people to prepare by removing chametz and preparing the Passover seder.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Nisan = first month of the year (for calendar purposes)</li>
+                <li>Lamb selected on 10th; slaughtered on 14th of Nisan</li>
+                <li>Lamb: one year old, male, without blemish</li>
+                <li>Blood on doorposts + lintel (not threshold)</li>
+                <li>Eaten with matzah and bitter herbs; roasted (not boiled)</li>
+                <li>Eaten in haste: loins girded, sandals on, staff in hand</li>
+                <li>Seven days of matzah; chametz forbidden and removed</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======== NEVIIM ======== -->
+  <div id="tab-neviim" class="section-panel">
+    <div class="scroll-area">
+
+      <!-- 3 Weeks -->
+      <div class="book-group blue" id="bg-3weeks">
+        <div class="book-header" onclick="toggleBook('bg-3weeks')">
+          <div class="book-title-wrap">
+            <span class="book-badge blue">Three Weeks</span>
+            <span class="book-name">תְּלַת דְּפֻרְעָנוּתָא — Haftarot of Retribution</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Jeremiah 1:1–2:3 <span class="chapter-tag">1st Shabbat after 17 Tammuz</span></div>
+            <div class="chapter-title">Jeremiah's Call &amp; God's Warning</div>
+            <div class="chapter-summary">
+              God calls <strong>Jeremiah</strong> from before birth: <em>"Before I formed you in the womb I knew you; before you were born I sanctified you."</em> Jeremiah protests he is too young to speak. God touches his mouth — <em>"I have placed My words in your mouth."</em> God shows Jeremiah two visions: an <strong>almond branch (שָׁקֵד)</strong> — because God is "watching (שֹׁקֵד)" over His word to fulfill it. Then a <strong>boiling pot (סִיר נָפוּחַ)</strong> tipped from the north — disaster will come from the north against all the inhabitants of the land (Babylonia). God commissions Jeremiah to speak to all of Judah. In 2:1–3, God recalls Israel's devotion as a bride in the desert — a brief tender memory before the accusations to come.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>First of the Three Haftarot of Retribution, read the Shabbat after the 17th of Tammuz (the fast marking when the walls of Jerusalem were breached). The prophecy of coming destruction fits the season of mourning leading to Tisha B'Av.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Two visions: almond branch (God is "watching") + boiling pot from north</li>
+                <li>Jeremiah called before birth; protests he's too young</li>
+                <li>God touches his mouth to give him words</li>
+                <li>2:2–3: Israel described as a devoted bride in the desert</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Jeremiah 2:4–28, 4:1–2 <span class="chapter-tag">2nd Shabbat of the Three Weeks</span></div>
+            <div class="chapter-title">Israel's Unfaithfulness — Accusations</div>
+            <div class="chapter-summary">
+              God accuses Israel: <em>What wrong did your ancestors find in Me that they went after worthless idols?</em> God brought them through the wilderness, a land of deserts and darkness, and gave them a fruitful land — yet they <strong>defiled it</strong> and made it an abomination. The priests, rulers, and prophets all went after Baal. God challenges: has any nation traded away its gods? Yet Israel traded its <strong>Glory (God)</strong> for what does not profit. A horrifying image: Israel has committed two evils — <em>they abandoned Me, the <strong>Fountain of Living Waters</strong>, and dug broken cisterns that hold no water.</em> Chapter 4:1–2: If Israel will return, remove its detestable idols; then nations will bless themselves by God through Israel.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Famous image: God = "Fountain of Living Waters" vs. broken cisterns</li>
+                <li>Nations don't abandon their gods — but Israel abandoned God</li>
+                <li>Accusation covers priests, rulers, and prophets</li>
+                <li>4:1–2 holds out hope: return to God and be a blessing to nations</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 1:1–27 <span class="chapter-tag">Shabbat Chazon · 3rd Shabbat / Before Tisha B'Av</span></div>
+            <div class="chapter-title">The Vision of Isaiah — Rebuke Before Tisha B'Av</div>
+            <div class="chapter-summary">
+              The opening of Isaiah is called <strong>"Chazon" (חֲזוֹן — vision)</strong>. God says: <em>"I raised children and they rebelled against me. The ox knows its master, the donkey its owner's manger — but Israel does not know, My people do not understand."</em> The nation is sick from head to foot; the land is desolate. God is fed up with sacrifices and festivals if they are not accompanied by justice. <em>"When you spread your hands in prayer, I will hide My eyes from you… Your hands are full of blood."</em> God calls: <em><strong>"Wash yourselves, make yourselves clean… cease to do evil, learn to do good, seek justice, aid the oppressed, uphold the orphan's cause, defend the widow."</strong></em> Then comes hope: <em>"Though your sins be like scarlet, they shall be white as snow."</em> Jerusalem once was a faithful city — now a harlot. God will restore her: the city will again be called <strong>"City of Righteousness (עִיר הַצֶּדֶק), Faithful City (קִרְיָה נֶאֱמָנָה)"</strong>.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Shabbat Chazon is the Shabbat immediately before Tisha B'Av. The entire haftarah is one of rebuke and warning, fitting the most mournful day of the Jewish year.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Chazon" = name of this Shabbat (from the opening word of Isaiah)</li>
+                <li>Ox knows its master — even animals more faithful than Israel</li>
+                <li>God rejects sacrifices + festivals done without justice</li>
+                <li>"Though your sins be scarlet, they shall be white as snow"</li>
+                <li>Social justice demands: orphan, widow, oppressed</li>
+                <li>Jerusalem will be restored as a righteous, faithful city</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Shiva D'Nechemata -->
+      <div class="book-group green" id="bg-comfort">
+        <div class="book-header" onclick="toggleBook('bg-comfort')">
+          <div class="book-title-wrap">
+            <span class="book-badge green">7 Weeks of Comfort</span>
+            <span class="book-name">שִׁבְעָה דְּנֶחֱמָתָא — After Tisha B'Av</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 40:1–26 <span class="chapter-tag">Shabbat Nachamu · 1st Week</span></div>
+            <div class="chapter-title">Comfort, Comfort My People (נַחֲמוּ עַמִּי)</div>
+            <div class="chapter-summary">
+              The famous opening: <em><strong>"Nachamu nachamu ami — Comfort, comfort My people,"</strong> says your God. Speak to Jerusalem's heart; her term of service is over, her sin has been paid for."</em> A voice calls: <em>"In the wilderness prepare the way of God; make straight a highway in the desert."</em> All flesh is like grass — it withers. <em>"But the word of our God stands forever."</em> God comes with might but also <em>"like a shepherd who tends his flock, gathers the lambs in his arms, carries them close to his heart."</em> God measured the waters in the hollow of His hand; weighed the mountains in scales. Who can compare to God? The nations are a drop in a bucket. God does not grow weary or tired. Those who trust in God will renew their strength, <em><strong>"they will soar on wings like eagles."</strong></em>
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Shabbat Nachamu = the Shabbat immediately after Tisha B'Av. "Nachamu" is the first word of this haftarah. This is the beginning of the seven weeks of comfort that take us from Tisha B'Av to Rosh Hashanah.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Nachamu nachamu ami" — first words = name of this Shabbat</li>
+                <li>Jerusalem's "term of service" has ended; punishment paid</li>
+                <li>God as shepherd carrying lambs — tenderness after punishment</li>
+                <li>All flesh is grass; God's word stands forever</li>
+                <li>Nations = drop in a bucket compared to God</li>
+                <li>"Soar on wings like eagles" — those who trust God</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 49:14–51:3 <span class="chapter-tag">2nd Week of Comfort</span></div>
+            <div class="chapter-title">Zion Says She's Been Forgotten</div>
+            <div class="chapter-summary">
+              Zion complains: <em>"God has forsaken me, God has forgotten me."</em> God responds with the most tender comfort: <em>"Can a woman forget her nursing infant, have no compassion on the child of her womb? <strong>Even if she could forget, I will not forget you. I have engraved you on the palms of My hands."</strong></em> Your destroyers will leave; your children will return. The chapter assures Israel that captors will be taken from her and her children restored. Chapter 51 returns to Abraham: <em>"Look to the rock from which you were cut — look to Abraham your father and Sarah who bore you."</em> God will comfort Zion; <em>"her wilderness will be like Eden, her desert like the Garden of God."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Can a mother forget her nursing child?" — most famous verse</li>
+                <li>"I have engraved you on the palms of My hands"</li>
+                <li>Zion's children will return; oppressors will leave</li>
+                <li>"Look to Abraham and Sarah" — call to remember the origins</li>
+                <li>Zion's wilderness will become like Eden</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 51:12–52:12 <span class="chapter-tag">3rd Week of Comfort</span></div>
+            <div class="chapter-title">Awake! — God Redeems Jerusalem</div>
+            <div class="chapter-summary">
+              <em>"I, I am He who comforts you — why do you fear mortals?"</em> God reminds Zion: you have suffered the cup of staggering (God's fury) but now God takes it from your hand and gives it to your oppressors. <em><strong>"Awake, awake, put on your strength, O Zion! Put on your beautiful garments, O Jerusalem!"</strong></em> Shake off the dust; arise. How beautiful upon the mountains are <em>"the feet of the messenger who announces peace… who says to Zion, 'Your God reigns!'"</em> The watchmen will sing together as God returns to Zion. Go out from Babylon! <em>"Depart, depart, go out from there… but you shall not go out in haste or in flight, for God goes before you, and the God of Israel is your rear guard."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Awake, awake, put on your strength O Zion!" — famous call</li>
+                <li>"How beautiful are the feet of the messenger of peace"</li>
+                <li>"Your God reigns!" — announced to Zion</li>
+                <li>Leave Babylon — but NOT in haste (contrast to Egypt)</li>
+                <li>God as vanguard AND rear guard of the departure</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 54:11–55:5 <span class="chapter-tag">4th Week of Comfort</span></div>
+            <div class="chapter-title">The Rebuilt Jerusalem — Covenant of Peace</div>
+            <div class="chapter-summary">
+              God promises to rebuild Jerusalem with <strong>sapphires, rubies, and precious stones</strong>. <em>"All your children shall be disciples of God, and your children's peace will be great."</em> No weapon formed against Israel will succeed. Then 55:1: <em><strong>"Ho! All who are thirsty, come to the water! Even one who has no money — come, buy, and eat!"</strong></em> God offers an everlasting covenant — the enduring love promised to David — extended now to the whole nation. Nations that did not know Israel will run to her because of God's holiness.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Jerusalem rebuilt with precious gems — sapphires, rubies</li>
+                <li>"All your children shall be taught by God"</li>
+                <li>"No weapon formed against you will succeed"</li>
+                <li>55:1 — "Ho, all who are thirsty" — free invitation to God's abundance</li>
+                <li>Everlasting covenant = the "sure mercies of David" extended to all</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 54:1–10 <span class="chapter-tag">5th Week of Comfort</span></div>
+            <div class="chapter-title">The Barren One Will Sing — Covenant Restored</div>
+            <div class="chapter-summary">
+              <em><strong>"Sing, O barren one who did not bear! Break forth into singing, you who did not labor in birth!"</strong></em> Zion, though barren and forsaken, will have more children than the married woman. Enlarge your tent! Spread wide! God admits to a brief abandonment: <em>"For a brief moment I forsook you, but with great compassion I will gather you. In a surge of anger I hid My face from you for a moment, but with everlasting kindness I will have compassion on you."</em> As the waters of Noah — God swore never to flood again. So God swears: <strong>"My kindness (חֶסֶד) shall not depart from you, and My covenant of peace (בְּרִית שָׁלוֹם) shall not be removed."</strong>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Sing O barren one" — Zion as a once-barren woman</li>
+                <li>God admits to "brief" abandonment — but eternal compassion</li>
+                <li>Comparison to Noah's flood: God swore that waters would never return</li>
+                <li>"Covenant of peace" (Brit Shalom) will not be removed</li>
+                <li>Key word: חֶסֶד (chesed) — everlasting kindness</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 60:1–22 <span class="chapter-tag">6th Week of Comfort</span></div>
+            <div class="chapter-title">Arise, Shine! — The Glory of Zion</div>
+            <div class="chapter-summary">
+              <em><strong>"Arise, shine (קוּמִי אוֹרִי), for your light has come! The glory of God has risen upon you."</strong></em> Though darkness covers the earth, God's glory shines on Israel and nations will come to her light. Caravans of camels will bring gold and frankincense; the ships of Tarshish will bring children. <em>"Foreigners will rebuild your walls; their kings will serve you."</em> The gates of the city will always stand open. The sun and moon will no longer be needed — <em>"God will be your everlasting light."</em> The smallest will become a mighty nation; <em>"I the LORD will hasten it in its time."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Arise, shine — your light has come" (first words, very famous)</li>
+                <li>Nations and kings come to Zion's light</li>
+                <li>Caravans of camels bringing gold and frankincense</li>
+                <li>No more need for sun or moon — God = everlasting light</li>
+                <li>Foreigners will rebuild Jerusalem's walls</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 61:10–63:9 <span class="chapter-tag">7th Week of Comfort</span></div>
+            <div class="chapter-title">Dressed in Salvation — God's Great Act of Redemption</div>
+            <div class="chapter-summary">
+              <em>"I will greatly rejoice in God… for He has dressed me in garments of salvation (בִּגְדֵי יֶשַׁע), wrapped me in a robe of righteousness, like a bridegroom adorning himself with a crown, like a bride adorned with her jewels."</em> Righteousness and praise will spring up before all nations. Jerusalem will be called by a <strong>new name</strong>: no more "Forsaken (עֲזוּבָה)" or "Desolate (שְׁמָמָה)" but <strong>"My Delight Is In Her (חֶפְצִי בָהּ)"</strong> and <strong>"Married (בְּעוּלָה)"</strong>. God has set watchmen on Jerusalem's walls. In 63, God is described as a warrior coming from Edom in blood-stained garments — having taken vengeance on Israel's enemies. <em>"In all their afflictions God was afflicted… In His love and pity He redeemed them."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Garments of salvation" + "robe of righteousness" — beautiful imagery</li>
+                <li>Jerusalem's new names: "Hephzibah" (My delight) and "Beulah" (Married)</li>
+                <li>God as warrior from Edom — taking vengeance on enemies</li>
+                <li>"In all their afflictions, God was afflicted" — key theological idea</li>
+                <li>In love and pity He redeemed them throughout history</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Other Haftarot -->
+      <div class="book-group red" id="bg-other-haft">
+        <div class="book-header" onclick="toggleBook('bg-other-haft')">
+          <div class="book-title-wrap">
+            <span class="book-badge red">Special Haftarot</span>
+            <span class="book-name">Shabbat Shuvah, Yom Kippur, Beshalach, Balak, Vayishlach</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Hosea 14:2–10 <span class="chapter-tag">Shabbat Shuvah · Between RH and YK</span></div>
+            <div class="chapter-title">Return, O Israel (שׁוּבָה יִשְׂרָאֵל)</div>
+            <div class="chapter-summary">
+              <em><strong>"Shuvah Yisrael — Return, O Israel, to the LORD your God, for you have stumbled in your iniquity."</strong></em> Take words with you and return. Say: <em>"Forgive all iniquity, accept what is good; we will pay our lips as offerings of bulls."</em> Assyria will not save us; we will not ride horses; we will no longer say 'our gods' to what our hands made. God promises: <em>"I will heal their apostasy, I will love them freely… I will be like dew to Israel — he will blossom like the lily."</em> They will dwell in God's shade, revive like grain, blossom like the vine. The chapter ends: <em>"Who is wise? Let them understand these things… the ways of God are straight; the righteous walk in them, but transgressors stumble."</em>
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Read on Shabbat Shuvah — the Shabbat between Rosh Hashanah and Yom Kippur. "Shuvah" = repentance/return. Perfect for the Ten Days of Repentance.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"Shuvah Yisrael" = name of this Shabbat (from opening words)</li>
+                <li>Instruction to "take words" — prayer replaces animal sacrifice</li>
+                <li>God = dew; Israel blossoms like lily, vine, cedar of Lebanon</li>
+                <li>Ends with wisdom teaching: wise will understand God's ways</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Isaiah 57:14–58:14 <span class="chapter-tag">Yom Kippur Morning</span></div>
+            <div class="chapter-title">True Fasting — Social Justice Over Ritual</div>
+            <div class="chapter-summary">
+              God says: <em>"Build up, build up the road! Clear the way!"</em> God dwells in the high and holy place <strong>and also</strong> with the lowly and humble of spirit. Chapter 58: the people ask why God ignores their fasting. God responds: <strong>your fast is invalid</strong> — while you fast, you pursue your business, oppress your workers, quarrel and fight. <em>"Is this the fast I choose — to bow your head like a reed, to lie in sackcloth and ashes?"</em> The true fast: <em><strong>"Release the bonds of wickedness, undo the yoke of oppression, let the oppressed go free, share your bread with the hungry, bring the homeless poor into your home, clothe the naked."</strong></em> Then your light will break forth like dawn, your healing will quickly appear. <em>"If you call the Shabbat a delight and honor it… then you will find joy in God."</em>
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Read on Yom Kippur morning as the central message of the day: the fast alone is meaningless without genuine moral transformation and care for others.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>God is both transcendent AND with the lowly and humble</li>
+                <li>Invalid fast: oppress workers, argue, bow head in sackcloth only</li>
+                <li>True fast: release oppressed, feed hungry, clothe naked, house homeless</li>
+                <li>"Your light will break forth like dawn" — reward for true fasting</li>
+                <li>Shabbat as delight — also discussed in this haftarah</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Judges 4:4–5:31 <span class="chapter-tag">Parashat Beshalach</span></div>
+            <div class="chapter-title">Deborah, Barak &amp; the Song of Deborah</div>
+            <div class="chapter-summary">
+              <strong>Deborah (דְּבוֹרָה)</strong>, a prophetess, is judging Israel under a <strong>palm tree</strong>. She summons <strong>Barak son of Abinoam</strong> and commands him to fight <strong>Sisera</strong>, commander of Canaan's army. Barak refuses to go unless Deborah goes with him. She agrees but warns him that <em>the glory will go to a woman.</em> Sisera's army has <strong>900 iron chariots</strong>. God confounds Sisera's army; Sisera flees on foot. He seeks refuge with <strong>Yael (יָעֵל)</strong>, wife of Heber the Kenite. She gives him milk, covers him with a blanket. When he falls asleep, <strong>Yael drives a tent peg through his temple</strong> and kills him. Barak arrives and sees Sisera dead. Chapter 5 is the <strong>Song of Deborah</strong> — one of the oldest poems in the Bible, celebrating the victory. Famous line: <em>"The stars fought from heaven, the stars in their courses fought against Sisera."</em> The song ends with Sisera's mother waiting at the window for her son who will never return.
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Read as haftarah for Parashat Beshalach because Beshalach contains the Song of the Sea (Shirat HaYam) — both portions contain famous victory songs sung after a miraculous military triumph.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Deborah = prophetess AND judge; sits under a palm tree</li>
+                <li>Barak won't go without Deborah → glory goes to a woman (Yael)</li>
+                <li>Sisera: 900 iron chariots; flees on foot after defeat</li>
+                <li>Yael kills Sisera with a tent peg through his temple</li>
+                <li>Song of Deborah = ancient victory poem (one of oldest in Tanakh)</li>
+                <li>"Stars fought against Sisera" — cosmic imagery</li>
+                <li>Ends poignantly with Sisera's mother waiting in vain</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Micah 5:6–6:8 <span class="chapter-tag">Parashat Balak</span></div>
+            <div class="chapter-title">The Remnant of Jacob &amp; "What Does God Require?"</div>
+            <div class="chapter-summary">
+              The remnant of Jacob will be <em>"like dew from God, like showers on the grass that do not wait for man or linger for mortals."</em> Also like a lion among the nations. God will cut off Israel's horses, chariots, and sorceries. In chapter 6, God holds a court case (ריב) against Israel: <em>"What have I done to you? How have I wearied you? I brought you out of Egypt, redeemed you from slavery, sent Moses, Aaron, and Miriam."</em> God reminds them of Balak and Bilam — <em>what Balak plotted and what Bilam answered</em>. Someone asks: what shall I bring God — calves? Thousands of rams? Rivers of oil? Shall I give my firstborn for my sin? Micah's famous answer: <em><strong>"What does the LORD require of you but to do justice (מִשְׁפָּט), love kindness (חֶסֶד), and walk humbly with your God (הַצְנֵעַ לֶכֶת עִם אֱלֹהֶיךָ)."</strong></em>
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Read for Parashat Balak because Balak and Bilam appear both in the Torah portion and in this haftarah — God explicitly references the Balak episode as evidence of His faithfulness to Israel.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Remnant of Jacob = like dew AND like a lion (both images)</li>
+                <li>God's court case: "What have I done to you?"</li>
+                <li>Balak and Bilam referenced explicitly in Micah 6</li>
+                <li>Famous triad: <strong>do justice + love kindness + walk humbly</strong></li>
+                <li>This verse (6:8) is one of the most famous in all of Tanakh</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Hosea 11:7–12:12 <span class="chapter-tag">Parashat Vayishlach</span></div>
+            <div class="chapter-title">God's Anguish Over Ephraim &amp; Jacob's Legacy</div>
+            <div class="chapter-summary">
+              God is anguished over Israel (called Ephraim): <em>"My heart recoils within me; my compassion grows warm and tender. I will not execute my fierce anger… for I am God and not a man, the Holy One in your midst."</em> Yet Ephraim has surrounded God with lies. Judah also wanders. God holds a case against Israel and will punish Jacob according to his ways. The passage then reviews <strong>Jacob's story</strong>: he grabbed his brother's heel in the womb; he strove with God (alluding to the wrestling); he wept and sought favor; at <strong>Beit El</strong> God found him and spoke with him. <em>"So you must return to your God; keep justice and righteousness, and wait continually for your God."</em>
+            </div>
+            <div class="context-box">
+              <div class="ctx-label">When &amp; Why</div>
+              <p>Read for Parashat Vayishlach, which contains Jacob's wrestling with the angel, his reunion with Esau, and his time at Beit El. The haftarah reviews Jacob's history through the prophetic lens of Hosea.</p>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"I am God and not a man" — reason God's compassion overcomes anger</li>
+                <li>Jacob reviewed: grabbed heel in womb + wrestled God + found at Beit El</li>
+                <li>Jacob wept and sought favor — at what encounter? (wrestling/angel)</li>
+                <li>Call to return: keep justice, wait for God</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======== KETUVIM ======== -->
+  <div id="tab-ketuvim" class="section-panel">
+    <div class="scroll-area">
+
+      <div class="book-group red" id="bg-eichah">
+        <div class="book-header" onclick="toggleBook('bg-eichah')">
+          <div class="book-title-wrap">
+            <span class="book-badge red">Ketuvim</span>
+            <span class="book-name">Eichah — Lamentations</span>
+            <span class="book-heb">אֵיכָה · Read on Tisha B'Av</span>
+          </div>
+          <span class="toggle-icon">▾</span>
+        </div>
+        <div class="book-body">
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Eichah 1 <span class="chapter-tag">Acrostic — Alef to Tav</span></div>
+            <div class="chapter-title">Jerusalem Sits Alone — The Desolate City</div>
+            <div class="chapter-summary">
+              <em><strong>"Eichah (אֵיכָה) — How does the city sit solitary that was full of people!"</strong></em> Jerusalem, once great among nations, is now like a widow. She weeps bitterly in the night, tears on her cheeks. All who honored her despise her; she has seen her nakedness. Her enemies have become her masters; her children have gone into exile. This chapter personifies Jerusalem as a <strong>grieving woman (אָבֵל)</strong> who laments her own sin: <em>"The LORD is in the right, for I have rebelled against His word."</em> She cries out: <em>"Is it nothing to you, all you who pass by? Look and see if there is any sorrow like my sorrow."</em> 22 verses, each beginning with a successive letter of the Hebrew alphabet (acrostic).
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Each chapter is an acrostic (Aleph-Bet), except chapter 5</li>
+                <li>Jerusalem personified as a widow/grieving woman</li>
+                <li>"Is it nothing to you?" — call to passersby</li>
+                <li>Jerusalem acknowledges: "The LORD is right; I have rebelled"</li>
+                <li>Traditional author: Jeremiah (though anonymous in the text)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Eichah 2 <span class="chapter-tag">Acrostic — God's Anger Described</span></div>
+            <div class="chapter-title">God Covered Zion with Darkness</div>
+            <div class="chapter-summary">
+              This chapter focuses on <strong>God as the agent of destruction</strong> — unusual and theologically bold. <em>"The LORD has destroyed without mercy all the dwelling places of Jacob; He has thrown down the strongholds of Judah."</em> God has <em>"swallowed up"</em> Israel; He has destroyed His own Temple like an enemy. The enemy has entered the sanctuary; prophets receive no vision. The poet tells Zion to <em>"cry out to the Lord"</em> — pour out your heart like water before the face of God. The chapter ends with the shocking image of mothers boiling their own children — a reference to the famine during the siege of Jerusalem.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>God is portrayed as the active agent of Zion's destruction</li>
+                <li>God "destroyed His own Temple like an enemy" — shocking idea</li>
+                <li>False prophets received no vision</li>
+                <li>Famine so severe: mothers boiling their own children</li>
+                <li>"Pour out your heart like water before God" — raw prayer imagery</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Eichah 3 <span class="chapter-tag">Triple Acrostic — Longest Chapter</span></div>
+            <div class="chapter-title">The Man Who Has Seen Affliction — Hope in Darkness</div>
+            <div class="chapter-summary">
+              The longest chapter — 66 verses, with each <em>letter</em> of the alphabet used for <em>three consecutive verses</em>. A single male narrator (<em>"I am the man who has seen affliction"</em>) describes deep personal suffering: darkness, heavy chains, broken bones, mockery. Yet in the middle comes the turning point — the most hopeful verses: <em><strong>"This I recall to mind; therefore I have hope: The steadfast love (חַסְדֵי) of the LORD never ceases, His mercies never end. They are new every morning — great is Your faithfulness (אֱמוּנָתְךָ)."</strong></em> God is good to those who wait for Him. It is good to bear the yoke in youth. The chapter also calls for communal reflection: <em>"Let us examine and probe our ways, and return to God."</em>
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>MOST FAMOUS chapter — center of the scroll; center of hope</li>
+                <li>"Chasidei Hashem lo tamnu" — God's steadfast love never ceases</li>
+                <li>"New every morning — great is Your faithfulness (emunah)"</li>
+                <li>Triple acrostic: each letter gets 3 verses (66 total)</li>
+                <li>"Let us examine our ways and return to God" — call to teshuvah</li>
+                <li>Narrator shifts from individual to communal voice</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Eichah 4 <span class="chapter-tag">Acrostic — The Siege</span></div>
+            <div class="chapter-title">How the Gold Has Grown Dim</div>
+            <div class="chapter-summary">
+              <em>"How the gold has grown dim, how the pure gold has changed! The sacred stones lie scattered at the head of every street."</em> This refers to the people — once like precious gold, now worthless. The children of Zion, once worth their weight in gold, are now regarded like clay pots. Even jackals give their young milk, but the daughter of Zion has become cruel to her children because of the siege's famine. The fate of the <strong>Nazirites</strong>, once pure and white, is described — now shriveled and black. The kings of the earth did not believe an enemy could enter Jerusalem's gates. It happened because of the sins of the priests and prophets who shed innocent blood. The chapter ends with a word to Edom: do not rejoice, for your cup of punishment will come too.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>"How the gold has grown dim" — people described as precious metals now tarnished</li>
+                <li>Even jackals nurse their young — contrast to mothers during siege</li>
+                <li>Nazirites' physical appearance destroyed by the famine</li>
+                <li>Sins of priests and prophets blamed for the destruction</li>
+                <li>Warning to Edom: your cup of punishment comes next</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="chapter-card">
+            <div class="chapter-ref">Eichah 5 <span class="chapter-tag">NOT an Acrostic — Prayer/Plea</span></div>
+            <div class="chapter-title">Remember, O LORD — The Final Prayer</div>
+            <div class="chapter-summary">
+              The final chapter is a communal prayer (not an acrostic — the only exception). <em>"Remember, O LORD, what has befallen us; look and see our disgrace."</em> The nation describes its suffering: orphans, widows, strangers ruling over them, famine, being pursued. <em>"The crown has fallen from our head. Woe to us that we have sinned."</em> The chapter ends with the most famous verses of the book — chanted aloud before the final verse: <em><strong>"Return us to You, O LORD, and we will return; renew our days as of old (הֲשִׁיבֵנוּ אֱלֹהֵינוּ אֵלֶיךָ וְנָשׁוּבָה, חַדֵּשׁ יָמֵינוּ כְּקֶדֶם)."</strong></em> The final (troubling) verse — <em>"unless You have utterly rejected us"</em> — is repeated in synagogue after the second-to-last verse so the book does not end on despair.
+            </div>
+            <div class="key-facts">
+              <div class="key-facts-title">Key Details</div>
+              <ul>
+                <li>Only chapter in Eichah that is NOT an acrostic</li>
+                <li>"Hashivenu" (ch. 5:21) — sung aloud in synagogue before final verse</li>
+                <li>"The crown has fallen" — complete humiliation</li>
+                <li>Final verse repeated before last verse so book doesn't end in despair</li>
+                <li>This chapter = communal prayer / petition (different tone from rest)</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======== BOOKS LIST ======== -->
+  <div id="tab-books" class="section-panel">
+    <div class="scroll-area">
+      <div style="background:#0d0700;border:1px solid rgba(184,134,11,0.3);border-radius:4px;padding:12px 16px;margin-bottom:14px;color:var(--parchment-dark);font-size:13px;font-style:italic;">
+        In a tiebreaker, you'll write as many books of Tanakh as you can. Spelling doesn't count — just get close!
+      </div>
+      <div class="books-section-title" style="color:var(--gold-light);background:#0d0700;border:none;padding:10px;border-radius:4px;margin-bottom:8px;">תּוֹרָה · Torah — 5 Books</div>
+      <div class="books-grid">
+        <div class="book-item"><span class="book-item-en">Genesis</span><span class="book-item-heb">בְּרֵאשִׁית</span></div>
+        <div class="book-item"><span class="book-item-en">Exodus</span><span class="book-item-heb">שְׁמוֹת</span></div>
+        <div class="book-item"><span class="book-item-en">Leviticus</span><span class="book-item-heb">וַיִּקְרָא</span></div>
+        <div class="book-item"><span class="book-item-en">Numbers</span><span class="book-item-heb">בְּמִדְבַּר</span></div>
+        <div class="book-item"><span class="book-item-en">Deuteronomy</span><span class="book-item-heb">דְּבָרִים</span></div>
+      </div>
+      <div class="books-section-title" style="color:#7abfff;background:#0d0700;border:none;padding:10px;border-radius:4px;margin:14px 0 8px;">נְבִיאִים · Nevi'im — 21 Books</div>
+      <div class="books-grid">
+        <div class="book-item"><span class="book-item-en">Joshua</span><span class="book-item-heb">יְהוֹשֻׁעַ</span></div>
+        <div class="book-item"><span class="book-item-en">Judges</span><span class="book-item-heb">שׁוֹפְטִים</span></div>
+        <div class="book-item"><span class="book-item-en">I Samuel</span><span class="book-item-heb">שְׁמוּאֵל א׳</span></div>
+        <div class="book-item"><span class="book-item-en">II Samuel</span><span class="book-item-heb">שְׁמוּאֵל ב׳</span></div>
+        <div class="book-item"><span class="book-item-en">I Kings</span><span class="book-item-heb">מְלָכִים א׳</span></div>
+        <div class="book-item"><span class="book-item-en">II Kings</span><span class="book-item-heb">מְלָכִים ב׳</span></div>
+        <div class="book-item"><span class="book-item-en">Isaiah</span><span class="book-item-heb">יְשַׁעְיָהוּ</span></div>
+        <div class="book-item"><span class="book-item-en">Jeremiah</span><span class="book-item-heb">יִרְמְיָהוּ</span></div>
+        <div class="book-item"><span class="book-item-en">Ezekiel</span><span class="book-item-heb">יְחֶזְקֵאל</span></div>
+        <div class="book-item"><span class="book-item-en">Hosea</span><span class="book-item-heb">הוֹשֵׁעַ</span></div>
+        <div class="book-item"><span class="book-item-en">Joel</span><span class="book-item-heb">יוֹאֵל</span></div>
+        <div class="book-item"><span class="book-item-en">Amos</span><span class="book-item-heb">עָמוֹס</span></div>
+        <div class="book-item"><span class="book-item-en">Obadiah</span><span class="book-item-heb">עֹבַדְיָה</span></div>
+        <div class="book-item"><span class="book-item-en">Jonah</span><span class="book-item-heb">יוֹנָה</span></div>
+        <div class="book-item"><span class="book-item-en">Micah</span><span class="book-item-heb">מִיכָה</span></div>
+        <div class="book-item"><span class="book-item-en">Nahum</span><span class="book-item-heb">נַחוּם</span></div>
+        <div class="book-item"><span class="book-item-en">Habakkuk</span><span class="book-item-heb">חֲבַקּוּק</span></div>
+        <div class="book-item"><span class="book-item-en">Zephaniah</span><span class="book-item-heb">צְפַנְיָה</span></div>
+        <div class="book-item"><span class="book-item-en">Haggai</span><span class="book-item-heb">חַגַּי</span></div>
+        <div class="book-item"><span class="book-item-en">Zechariah</span><span class="book-item-heb">זְכַרְיָה</span></div>
+        <div class="book-item"><span class="book-item-en">Malachi</span><span class="book-item-heb">מַלְאָכִי</span></div>
+      </div>
+      <div class="books-section-title" style="color:#f4a460;background:#0d0700;border:none;padding:10px;border-radius:4px;margin:14px 0 8px;">כְּתוּבִים · Ketuvim — 13 Books</div>
+      <div class="books-grid">
+        <div class="book-item"><span class="book-item-en">Psalms</span><span class="book-item-heb">תְּהִלִּים</span></div>
+        <div class="book-item"><span class="book-item-en">Proverbs</span><span class="book-item-heb">מִשְׁלֵי</span></div>
+        <div class="book-item"><span class="book-item-en">Job</span><span class="book-item-heb">אִיּוֹב</span></div>
+        <div class="book-item"><span class="book-item-en">Song of Songs</span><span class="book-item-heb">שִׁיר הַשִּׁירִים</span></div>
+        <div class="book-item"><span class="book-item-en">Ruth</span><span class="book-item-heb">רוּת</span></div>
+        <div class="book-item"><span class="book-item-en">Lamentations</span><span class="book-item-heb">אֵיכָה</span></div>
+        <div class="book-item"><span class="book-item-en">Ecclesiastes</span><span class="book-item-heb">קֹהֶלֶת</span></div>
+        <div class="book-item"><span class="book-item-en">Esther</span><span class="book-item-heb">אֶסְתֵּר</span></div>
+        <div class="book-item"><span class="book-item-en">Daniel</span><span class="book-item-heb">דָּנִיֵּאל</span></div>
+        <div class="book-item"><span class="book-item-en">Ezra</span><span class="book-item-heb">עֶזְרָא</span></div>
+        <div class="book-item"><span class="book-item-en">Nehemiah</span><span class="book-item-heb">נְחֶמְיָה</span></div>
+        <div class="book-item"><span class="book-item-en">I Chronicles</span><span class="book-item-heb">דִּבְרֵי הַיָּמִים א׳</span></div>
+        <div class="book-item"><span class="book-item-en">II Chronicles</span><span class="book-item-heb">דִּבְרֵי הַיָּמִים ב׳</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== QUIZ ======== -->
+  <div id="tab-quiz" class="section-panel">
+    <div class="quiz-container">
+      <div class="quiz-intro" id="quiz-intro">
+        <h2>📖 Quiz Yourself</h2>
+        <p>Test your knowledge of the Chidon material. Choose a category and see how well you know the texts!</p>
+        <div class="quiz-settings">
+          <button class="quiz-filter-btn sel" id="filter-all" onclick="setFilter('all')">All Topics</button>
+          <button class="quiz-filter-btn" id="filter-chumash" onclick="setFilter('chumash')">Chumash</button>
+          <button class="quiz-filter-btn" id="filter-maftir" onclick="setFilter('maftir')">Maftir</button>
+          <button class="quiz-filter-btn" id="filter-neviim" onclick="setFilter('neviim')">Nevi'im</button>
+          <button class="quiz-filter-btn" id="filter-ketuvim" onclick="setFilter('ketuvim')">Eichah</button>
+        </div>
+        <button class="start-quiz-btn" onclick="startQuiz()">Begin Quiz</button>
+      </div>
+
+      <div class="quiz-question-area" id="quiz-qa">
+        <div class="quiz-q-num" id="q-num">Question 1 of 10</div>
+        <div class="quiz-q-text" id="q-text"></div>
+        <div class="quiz-choices" id="q-choices"></div>
+        <div class="quiz-feedback" id="q-feedback"></div>
+        <button class="quiz-next-btn" id="q-next" onclick="nextQuestion()">Next Question →</button>
+      </div>
+
+      <div class="quiz-score-wrap" id="quiz-score">
+        <div class="score-big" id="score-big">0/0</div>
+        <div class="score-label">Questions Correct</div>
+        <div class="score-msg" id="score-msg"></div>
+        <button class="start-quiz-btn" onclick="resetQuiz()">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== TAB NAVIGATION =====
+function showTab(name) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleBook(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+// Open all books by default
+document.querySelectorAll('.book-group').forEach(bg => bg.classList.add('open'));
+
+// ===== QUIZ =====
+const ALL_QUESTIONS = [
+  // CHUMASH
+  { cat: 'chumash', q: "What was the name of the land where Cain settled after killing Abel?", choices: ["Land of Nod", "Land of Shinar", "Land of Goshen", "Land of Canaan"], ans: 0, exp: "Cain settled in the 'Land of Nod' (meaning 'wandering'), east of Eden." },
+  { cat: 'chumash', q: "What were the dimensions of Noah's ark?", choices: ["200 x 40 x 20 cubits", "300 x 50 x 30 cubits", "400 x 60 x 40 cubits", "100 x 30 x 15 cubits"], ans: 1, exp: "The ark was 300 cubits long, 50 wide, and 30 high, with three decks." },
+  { cat: 'chumash', q: "What is the sign of God's covenant with Noah after the flood?", choices: ["A burning bush", "A rainbow", "An olive branch", "A pillar of fire"], ans: 1, exp: "God placed a rainbow in the clouds as the sign of His covenant never to flood the earth again." },
+  { cat: 'chumash', q: "What was the first bird Noah sent out from the ark?", choices: ["A dove", "A sparrow", "A raven", "An eagle"], ans: 2, exp: "Noah first sent out a raven, which flew back and forth. Then he sent a dove." },
+  { cat: 'chumash', q: "In the Tower of Babel story, the people settled in the land of:", choices: ["Canaan", "Egypt", "Shinar", "Aram"], ans: 2, exp: "The people migrated eastward and settled in the land of Shinar (Babylonia)." },
+  { cat: 'chumash', q: "What was the dying name Rachel gave to Benjamin?", choices: ["Benjamin", "Ben-Ami", "Ben-Oni", "Binyamin"], ans: 2, exp: "Rachel called him Ben-Oni ('son of my sorrow'), but Jacob renamed him Benjamin ('son of the right hand')." },
+  { cat: 'chumash', q: "What is the Torah source for Birkat HaMazon (grace after meals)?", choices: ["Deuteronomy 6:5", "Deuteronomy 8:10", "Exodus 13:8", "Numbers 15:41"], ans: 1, exp: "Deuteronomy 8:10 — 'You shall eat and be satisfied and bless the LORD your God for the good land.'" },
+  { cat: 'chumash', q: "In Deuteronomy 10, who does God command Israel to love, because 'you were strangers in Egypt'?", choices: ["The widow", "The stranger (ger)", "The orphan", "The poor"], ans: 1, exp: "'You shall love the stranger, for you were strangers in the land of Egypt' (Deut. 10:19)." },
+  { cat: 'chumash', q: "The declaration recited when bringing first fruits (bikkurim) begins with:", choices: ["Shema Yisrael", "Baruch Ata Adonai", "Arami Oved Avi", "Ashrei Ha'ish"], ans: 2, exp: "'Arami Oved Avi' — 'My father was a wandering Aramean' — is the declaration recited with bikkurim (Deut. 26)." },
+  { cat: 'chumash', q: "What famous phrase from Deuteronomy 30 is Moses' final plea to Israel?", choices: ["Hear O Israel", "Choose life", "Love your neighbor", "Remember the Sabbath"], ans: 1, exp: "'Choose life (u'vacharta ba'chayyim)' — Deuteronomy 30:19" },
+  // MAFTIR
+  { cat: 'maftir', q: "Which maftir reading is about the half-shekel donation?", choices: ["Shabbat Zachor", "Shabbat Shekalim", "Shabbat Parah", "Shabbat HaHodesh"], ans: 1, exp: "Shabbat Shekalim (Exodus 30:11-16) — the half-shekel contribution, read before Adar." },
+  { cat: 'maftir', q: "The maftir for Shabbat Zachor commands Israel to remember what nation's attack?", choices: ["Moab", "Midian", "Egypt", "Amalek"], ans: 3, exp: "Deuteronomy 25:17-19 commands remembering Amalek's attack on the weak at the rear of the camp." },
+  { cat: 'maftir', q: "The Red Heifer ritual (Shabbat Parah) purifies from which type of impurity?", choices: ["Food impurity", "Marital impurity", "Corpse impurity", "Disease impurity"], ans: 2, exp: "The Red Heifer ashes mixed with water purify someone who became impure through contact with a corpse." },
+  { cat: 'maftir', q: "On what day of the month was the Passover lamb to be slaughtered?", choices: ["10th of Nisan", "14th of Nisan", "1st of Nisan", "15th of Nisan"], ans: 1, exp: "Exodus 12: The lamb was selected on the 10th of Nisan and slaughtered on the 14th at twilight." },
+  { cat: 'maftir', q: "What paradox is at the heart of the Red Heifer (Parah Adumah) ritual?", choices: ["The young become old", "The impure become pure and the priest becomes impure", "The rich give less and the poor give more", "The lamb is eaten but not tasted"], ans: 1, exp: "The person who performs the purification (the priest) becomes impure, while the impure person becomes pure — the ultimate חֹק." },
+  { cat: 'maftir', q: "During the Passover lamb meal, Israel was commanded to eat it:", choices: ["Sitting comfortably around a table", "With shoes on, staff in hand, in haste", "After midnight only", "Before cooking it fully"], ans: 1, exp: "Exodus 12: Eat it with loins girded, sandals on feet, staff in hand — in haste." },
+  // NEVIIM
+  { cat: 'neviim', q: "What two visions does Jeremiah see in his calling (Jeremiah 1)?", choices: ["An almond branch and a boiling pot", "A burning bush and a rainbow", "A scroll and a sword", "Two olive trees and a lampstand"], ans: 0, exp: "Jeremiah sees an almond (shaked) branch — God is 'watching' (shoked) — and a boiling pot tipped from the north." },
+  { cat: 'neviim', q: "Shabbat Chazon gets its name from the opening word of which prophetic book?", choices: ["Jeremiah", "Ezekiel", "Isaiah", "Micah"], ans: 2, exp: "Isaiah 1:1 — 'Chazon Yeshayahu' (The vision of Isaiah) — gives Shabbat Chazon its name." },
+  { cat: 'neviim', q: "Shabbat Nachamu is named after the opening words of which haftarah?", choices: ["Hosea 14", "Isaiah 40", "Jeremiah 31", "Isaiah 54"], ans: 1, exp: "'Nachamu nachamu ami' — Comfort, comfort My people — opens Isaiah 40, read on Shabbat Nachamu." },
+  { cat: 'neviim', q: "Who is the female judge and prophetess in the Book of Judges who leads Israel to victory?", choices: ["Miriam", "Hannah", "Yael", "Deborah"], ans: 3, exp: "Deborah, a prophetess, is judge over Israel and leads Barak into battle against Sisera." },
+  { cat: 'neviim', q: "How does Yael kill Sisera?", choices: ["With a sword", "With a tent peg through his temple", "By drowning", "With poison in milk"], ans: 1, exp: "Yael drives a tent peg through Sisera's temple while he sleeps in her tent." },
+  { cat: 'neviim', q: "What is Micah's famous three-part answer to 'What does God require of you?'", choices: ["Love, pray, fast", "Study, pray, give charity", "Do justice, love kindness, walk humbly with God", "Observe Shabbat, keep kosher, honor parents"], ans: 2, exp: "Micah 6:8 — 'Do justice (mishpat), love kindness (chesed), and walk humbly with your God.'" },
+  { cat: 'neviim', q: "On Shabbat Shuvah, the haftarah from Hosea opens with:", choices: ["Return, O Israel, to the LORD your God", "Comfort, comfort My people", "Arise, shine, for your light has come", "Hear the word of the LORD"], ans: 0, exp: "'Shuvah Yisrael el Adonai Elohecha' — Return, O Israel, to the LORD your God (Hosea 14:2)" },
+  { cat: 'neviim', q: "The Yom Kippur morning haftarah (Isaiah 58) says the true fast involves:", choices: ["More intense prayer and fasting", "Releasing the oppressed and feeding the hungry", "Bringing extra sacrifices to the Temple", "Wearing sackcloth and ashes all day"], ans: 1, exp: "Isaiah 58 — the true fast means releasing bondage, feeding the hungry, housing the homeless, clothing the naked." },
+  { cat: 'neviim', q: "Which haftarah is read for Parashat Beshalach, and why?", choices: ["Isaiah 40 — about the return from Babylon", "Judges 4-5 — the Song of Deborah, like the Song of the Sea", "Hosea 14 — about returning to God", "Micah 6 — about justice"], ans: 1, exp: "Judges 4-5 is read because both Beshalach (Song of the Sea) and Judges 5 (Song of Deborah) contain ancient victory songs after miraculous military triumphs." },
+  { cat: 'neviim', q: "In Isaiah 49, God says 'Even if a mother could forget her infant, I will not forget you.' What does God say comes next?", choices: ["I have written your name in the Book of Life", "I have engraved you on the palms of My hands", "I have set you apart as a holy nation", "I have placed My spirit within you"], ans: 1, exp: "Isaiah 49:16 — 'Behold, I have engraved you on the palms of My hands'" },
+  // KETUVIM
+  { cat: 'ketuvim', q: "How many chapters of Eichah are acrostics (alef-bet)?", choices: ["All 5", "4 out of 5", "3 out of 5", "Only chapter 3"], ans: 1, exp: "Chapters 1, 2, 3, and 4 are acrostics. Chapter 5 is NOT an acrostic (though it has 22 verses)." },
+  { cat: 'ketuvim', q: "What is unique about chapter 3 of Eichah compared to other chapters?", choices: ["It has no acrostic", "Each Hebrew letter is used for THREE consecutive verses", "It is written in prose, not poetry", "It is the shortest chapter"], ans: 1, exp: "Chapter 3 is a triple acrostic — each letter gets three verses, making 66 verses total. It's also the chapter of hope." },
+  { cat: 'ketuvim', q: "What are the most hopeful verses in the middle of Eichah?", choices: ["'Pour out your heart like water before God'", "'The steadfast love of the LORD never ceases; His mercies are new every morning'", "'Return us to You, O LORD, and we will return'", "'How does the city sit solitary'"], ans: 1, exp: "Eichah 3:22-23 — 'Chasidei Hashem lo tamnu… chadashim labekarim, raba emunatecha' — the center of hope in the book." },
+  { cat: 'ketuvim', q: "The famous verse 'Hashivenu Adonai elecha v'nashuva' ('Return us to You') appears in which chapter of Eichah?", choices: ["Chapter 1", "Chapter 3", "Chapter 5", "Chapter 2"], ans: 2, exp: "Eichah 5:21 — the penultimate verse of the book, chanted aloud before the final verse." },
+  { cat: 'ketuvim', q: "Why is the final verse of Eichah repeated in synagogue before the actual final verse?", choices: ["Because it's the most beautiful verse", "So the book doesn't end on a note of despair", "It is traditionally sung as a melody", "Because it mentions Jerusalem by name"], ans: 1, exp: "The final verse suggests God may have utterly rejected Israel. To avoid ending on despair, verse 21 ('Return us') is chanted again after verse 22." },
+];
+
+let currentFilter = 'all';
+let quizQuestions = [];
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.quiz-filter-btn').forEach(b => b.classList.remove('sel'));
+  document.getElementById('filter-' + f).classList.add('sel');
+}
+
+function startQuiz() {
+  let pool = currentFilter === 'all' ? ALL_QUESTIONS : ALL_QUESTIONS.filter(q => q.cat === currentFilter);
+  quizQuestions = shuffle([...pool]).slice(0, Math.min(12, pool.length));
+  currentQ = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('quiz-intro').style.display = 'none';
+  document.getElementById('quiz-score').style.display = 'none';
+  document.getElementById('quiz-qa').style.display = 'block';
+  showQuestion();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function showQuestion() {
+  answered = false;
+  const q = quizQuestions[currentQ];
+  document.getElementById('q-num').textContent = `Question ${currentQ + 1} of ${quizQuestions.length}`;
+  document.getElementById('q-text').textContent = q.q;
+  const feedback = document.getElementById('q-feedback');
+  feedback.className = 'quiz-feedback';
+  feedback.style.display = 'none';
+  document.getElementById('q-next').style.display = 'none';
+
+  const choices = document.getElementById('q-choices');
+  choices.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.choices.forEach((c, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'quiz-choice';
+    btn.innerHTML = `<span class="choice-letter">${letters[i]}</span><span class="choice-text">${c}</span>`;
+    btn.onclick = () => answer(i, btn);
+    choices.appendChild(btn);
+  });
+}
+
+function answer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = quizQuestions[currentQ];
+  const choices = document.querySelectorAll('.quiz-choice');
+  const feedback = document.getElementById('q-feedback');
+
+  if (idx === q.ans) {
+    btn.classList.add('correct');
+    score++;
+    feedback.className = 'quiz-feedback correct';
+    feedback.innerHTML = `✅ <strong>Correct!</strong> ${q.exp}`;
+  } else {
+    btn.classList.add('wrong');
+    choices[q.ans].classList.add('reveal-correct');
+    feedback.className = 'quiz-feedback wrong';
+    feedback.innerHTML = `❌ <strong>Not quite.</strong> ${q.exp}`;
+  }
+
+  document.getElementById('q-next').style.display = 'inline-block';
+  document.getElementById('q-next').textContent = currentQ < quizQuestions.length - 1 ? 'Next Question →' : 'See Results';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= quizQuestions.length) {
+    showScore();
+  } else {
+    showQuestion();
+  }
+}
+
+function showScore() {
+  document.getElementById('quiz-qa').style.display = 'none';
+  document.getElementById('quiz-score').style.display = 'block';
+  const pct = Math.round((score / quizQuestions.length) * 100);
+  document.getElementById('score-big').textContent = `${score}/${quizQuestions.length}`;
+  const msgs = [
+    [0, 40, "Keep reviewing — you've got this! Go back through the summaries."],
+    [40, 70, "Good effort! Review the sections you missed and try again."],
+    [70, 90, "Great work! You know this material well."],
+    [90, 101, "Excellent! You're ready for the Chidon. מַזָּל טוֹב!"]
+  ];
+  const msg = msgs.find(m => pct >= m[0] && pct < m[1]);
+  document.getElementById('score-msg').textContent = msg ? msg[2] : "";
+}
+
+function resetQuiz() {
+  document.getElementById('quiz-score').style.display = 'none';
+  document.getElementById('quiz-intro').style.display = 'block';
+  document.getElementById('quiz-qa').style.display = 'none';
+}
+</script>
+
+<!-- ========== AI STUDY BUDDY ========== -->
+<style>
+  /* Floating button */
+  #ai-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b8860b, #d4a017);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(184,134,11,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    z-index: 1000;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #ai-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(184,134,11,0.7); }
+  #ai-fab .fab-tooltip {
+    position: absolute;
+    right: 70px;
+    background: #1a0f05;
+    color: var(--gold-pale);
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(184,134,11,0.4);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  #ai-fab:hover .fab-tooltip { opacity: 1; }
+
+  /* Chat window */
+  #ai-chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: min(420px, calc(100vw - 32px));
+    height: 520px;
+    background: #1a0f05;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+    overflow: hidden;
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  #ai-chat-window.open { display: flex; }
+
+  .chat-header {
+    background: linear-gradient(135deg, #2a1a0a, #1a0f05);
+    border-bottom: 1px solid rgba(184,134,11,0.4);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .chat-header-left { display: flex; align-items: center; gap: 10px; }
+  .chat-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b8860b, #d4a017);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .chat-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--gold-light); }
+  .chat-subtitle { font-size: 11px; color: var(--parchment-dark); opacity: 0.7; margin-top: 1px; }
+  .chat-close {
+    background: none; border: none; color: var(--parchment-dark);
+    font-size: 20px; cursor: pointer; padding: 2px 6px;
+    border-radius: 3px; transition: background 0.15s;
+    line-height: 1;
+  }
+  .chat-close:hover { background: rgba(255,255,255,0.08); }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .msg {
+    max-width: 88%;
+    padding: 10px 13px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    animation: msgIn 0.2s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.ai {
+    align-self: flex-start;
+    background: #2a1a0a;
+    border: 1px solid rgba(184,134,11,0.25);
+    color: var(--parchment);
+    border-bottom-left-radius: 3px;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: var(--gold);
+    color: var(--ink);
+    font-weight: 500;
+    border-bottom-right-radius: 3px;
+  }
+  .msg.ai strong { color: var(--gold-light); }
+  .msg.ai em { color: var(--parchment-dark); font-style: italic; }
+
+  .typing-indicator {
+    align-self: flex-start;
+    background: #2a1a0a;
+    border: 1px solid rgba(184,134,11,0.25);
+    border-radius: 12px;
+    border-bottom-left-radius: 3px;
+    padding: 12px 16px;
+    display: none;
+  }
+  .typing-indicator.show { display: flex; gap: 5px; align-items: center; }
+  .typing-dot {
+    width: 7px; height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .chat-suggested {
+    padding: 8px 14px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(184,134,11,0.15);
+    flex-shrink: 0;
+    background: rgba(0,0,0,0.2);
+  }
+  .sug-btn {
+    background: rgba(184,134,11,0.12);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 20px;
+    color: var(--gold-pale);
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Source Serif 4', serif;
+    white-space: nowrap;
+  }
+  .sug-btn:hover { background: rgba(184,134,11,0.25); color: white; }
+
+  .chat-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px 14px;
+    border-top: 1px solid rgba(184,134,11,0.3);
+    flex-shrink: 0;
+    background: rgba(0,0,0,0.3);
+  }
+  .chat-input {
+    flex: 1;
+    background: #2a1a0a;
+    border: 1px solid rgba(184,134,11,0.4);
+    border-radius: 6px;
+    color: var(--parchment);
+    font-family: 'Source Serif 4', serif;
+    font-size: 13px;
+    padding: 9px 12px;
+    outline: none;
+    resize: none;
+    height: 40px;
+    transition: border-color 0.15s;
+  }
+  .chat-input:focus { border-color: var(--gold); }
+  .chat-input::placeholder { color: rgba(245,234,214,0.3); }
+  .chat-send {
+    background: var(--gold);
+    border: none;
+    border-radius: 6px;
+    color: var(--ink);
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat-send:hover { background: var(--gold-light); }
+  .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+
+<!-- Floating Button -->
+<button id="ai-fab" onclick="toggleChat()">
+  📖
+  <span class="fab-tooltip">Ask your Study Buddy!</span>
+</button>
+
+<!-- Chat Window -->
+<div id="ai-chat-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🦉</div>
+      <div>
+        <div class="chat-title">Chidon Study Buddy</div>
+        <div class="chat-subtitle" id="chat-subtitle-text">Enter your API key to begin</div>
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <!-- API Key Screen -->
+  <div id="apikey-screen" style="display:flex;flex-direction:column;flex:1;align-items:center;justify-content:center;padding:24px;gap:14px;background:#1a0f05;">
+    <div style="font-size:36px;">🔑</div>
+    <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-light);text-align:center;">Enter your Anthropic API Key</div>
+    <div style="font-size:12.5px;color:var(--parchment-dark);text-align:center;line-height:1.7;opacity:0.9;">
+      Get a free key at <strong style="color:var(--gold);">console.anthropic.com</strong><br>
+      Your key is only stored in your browser memory<br>and never sent anywhere except Anthropic.
+    </div>
+    <input id="apikey-input" type="password"
+      placeholder="sk-ant-..."
+      onkeydown="if(event.key==='Enter') submitApiKey();"
+      style="width:100%;background:#2a1a0a;border:1px solid rgba(184,134,11,0.5);border-radius:6px;color:var(--parchment);font-family:'Source Serif 4',serif;font-size:13px;padding:10px 13px;outline:none;transition:border-color 0.15s;"
+      onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(184,134,11,0.5)'" />
+    <div id="apikey-error" style="display:none;color:#e07070;font-size:12px;text-align:center;">⚠️ That doesn't look right — API keys start with "sk-ant-"</div>
+    <button onclick="submitApiKey()"
+      style="width:100%;padding:11px;background:var(--gold);border:none;border-radius:6px;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--ink);cursor:pointer;transition:background 0.15s;"
+      onmouseover="this.style.background='#d4a017'" onmouseout="this.style.background='var(--gold)'">
+      Start Studying →
+    </button>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div id="chat-main" style="display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0;">
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg ai">
+        👋 <strong>Shalom!</strong> I'm your Chidon Study Buddy. I know everything in your 2026 study guide — Chumash, Maftir readings, Nevi'im, and Eichah.<br><br>
+        Ask me anything! Like <em>"Why is Shabbat Zachor read before Purim?"</em> or <em>"Quiz me on Eichah"</em> or <em>"Explain the Red Heifer paradox."</em>
+      </div>
+    </div>
+
+    <div class="typing-indicator" id="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+
+    <div class="chat-suggested" id="chat-suggested">
+      <button class="sug-btn" onclick="sendSuggestion(this)">What is Shabbat Nachamu?</button>
+      <button class="sug-btn" onclick="sendSuggestion(this)">Explain the Red Heifer</button>
+      <button class="sug-btn" onclick="sendSuggestion(this)">Quiz me on Maftir readings</button>
+      <button class="sug-btn" onclick="sendSuggestion(this)">What's Micah 6:8?</button>
+    </div>
+
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chat-input" placeholder="Ask anything about the Chidon material..." rows="1"
+        onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+      <button class="chat-send" id="chat-send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== AI CHAT =====
+const SYSTEM_PROMPT = `You are a friendly, encouraging Jewish studies tutor helping a middle school student (grades 5-8) prepare for the Chidon HaTanakh 2026 competition at Sager Solomon Schechter Day School. The competition is on April 22, 2026 (Yom Ha'atzma'ut).
+
+You know the ENTIRE study guide. Here is all the material:
+
+CHUMASH SECTIONS:
+- Genesis 4: Cain's mark, Land of Nod, Seth born to replace Abel, Enosh, people begin calling on God
+- Genesis 6:1-22: Noah is righteous/blameless/walked with God, ark = 300x50x30 cubits, 3 decks, cypress wood + pitch, God's reason = chamas (violence), covenant promised
+- Genesis 7:1-24: Clean animals = 7 pairs, unclean = 1 pair; rain = 40 days/nights; Noah = 600 years old; waters rose 15 cubits above mountains; Shem Ham Japheth; 150 days total
+- Genesis 8:1-22: Ark rests on Mount Ararat; raven then dove; olive leaf = sign; Noah builds altar; God promises never to destroy all life again; regular seasons guaranteed
+- Genesis 9:1-19: Be fruitful/multiply; animals fear humans; no eating blood; murder = capital offense (image of God); rainbow covenant includes all living creatures; Shem Ham Japheth
+- Genesis 11:1-9: Land of Shinar; one language; build city+tower; "make a name for ourselves"; God scatters and confuses language; Babel = confused
+- Genesis 35:1-29: Jacob buries foreign gods at Shechem; God renames Jacob "Israel" again; God = El Shaddai; Rachel dies giving birth to Benjamin (she wanted Ben-Oni); Rachel buried near Bethlehem/Ephrath; Reuben sins with Bilhah; Isaac dies at 180, buried by Esau and Jacob
+- Deuteronomy 1:1-33: Moses speaks on plains of Moab; appoints judges; spies sent from Kadesh-barnea; Anakim = giants; God carries Israel like a father carries his son
+- Deuteronomy 8:1-18: 40 years in desert; manna = test of humility; not by bread alone; verse 10 = source for Birkat HaMazon; good land described; WARNING: don't forget God when prosperous; "my power made this wealth" = the danger
+- Deuteronomy 10:12-22: Fear/walk/love/serve/observe = five demands; circumcise your heart; God of gods Lord of lords; loves orphan widow stranger; "you were strangers in Egypt"
+- Deuteronomy 11:13-21: Second paragraph of Shema; conditional: obey=rain (yoreh+malkosh), disobey=drought; tefillin and mezuzah commanded
+- Deuteronomy 26:1-11: Bikkurim (first fruits); "Arami Oved Avi" declaration = wandering Aramean father, Egypt, slavery, Exodus, Promised Land; also = core of Passover Haggadah
+- Deuteronomy 30:11-20: Torah not in heaven; word is in your mouth and heart; life/good vs death/evil; "CHOOSE LIFE" (u'vacharta ba'chayyim)
+
+MAFTIR READINGS:
+- Shabbat Shekalim (Exodus 30:11-16): Half-shekel donation; every male 20+; rich=poor same amount; atonement + Mishkan support; read before Adar/before Purim season
+- Shabbat Zachor (Deut 25:17-19): Remember Amalek attacked weak/weary at rear; "no fear of God"; blot out Amalek; read before Purim because Haman = Agagite (descendant of Amalek); paradox: remember to forget
+- Shabbat Parah (Numbers 19:1-22): Red heifer = entirely red, no defect, never yoked; burned with cedar wood+hyssop+crimson thread; ashes+water = purify from corpse impurity; sprinkle days 3 and 7; paradox: priest becomes impure, impure person becomes pure; classic chok; read after Purim to prepare for Passover
+- Shabbat HaHodesh (Exodus 12:1-20): Nisan = first month; lamb selected 10th Nisan, slaughtered 14th at twilight; 1-year-old male without blemish; blood on doorposts+lintel (NOT threshold); eat with matzah+bitter herbs; roasted not boiled; loins girded/sandals on/staff in hand = haste; 7 days matzah; chametz forbidden; read before Nisan to prepare for Passover
+
+NEVIIM - THREE WEEKS OF RETRIBUTION (t'lat d'puranuta):
+- Jeremiah 1:1-2:3 (1st Shabbat after 17 Tammuz): Jeremiah called before birth; protests too young; God touches mouth; two visions = almond branch (shaked/shoked = God watching) + boiling pot from north = disaster coming; 2:2-3 = Israel as devoted bride in desert
+- Jeremiah 2:4-28, 4:1-2 (2nd Shabbat): Accusations; nations don't trade their gods but Israel traded God for worthless idols; God = "Fountain of Living Waters" vs broken cisterns; 4:1-2 = if you return, nations will bless themselves through Israel
+- Isaiah 1:1-27 (Shabbat Chazon, 3rd Shabbat before Tisha B'Av): "Chazon" = vision; ox knows its master but Israel doesn't know God; God rejects sacrifices without justice; "though sins be scarlet, white as snow"; seek justice/orphan/widow; Jerusalem will be restored as "City of Righteousness / Faithful City"
+
+NEVIIM - SEVEN WEEKS OF COMFORT (shiva d'nechemata):
+- Isaiah 40:1-26 (Shabbat Nachamu, 1st week): "Nachamu nachamu ami" = Comfort comfort my people; Jerusalem's term ended, sin paid; God as shepherd carrying lambs; all flesh is grass but God's word stands forever; nations = drop in bucket; "soar on wings like eagles"
+- Isaiah 49:14-51:3 (2nd week): Zion says "God forgot me"; "Can a mother forget her nursing child? I will not forget you — I have engraved you on palms of my hands"; look to Abraham and Sarah; Zion's wilderness = like Eden
+- Isaiah 51:12-52:12 (3rd week): "Awake awake put on your strength O Zion!"; "how beautiful are the feet of the messenger of peace"; "Your God reigns!"; leave Babylon but NOT in haste; God = vanguard AND rear guard
+- Isaiah 54:11-55:5 (4th week): Jerusalem rebuilt with sapphires/rubies; "all your children taught by God"; "no weapon formed against you will succeed"; 55:1 "Ho all who are thirsty come to the water"; everlasting covenant = sure mercies of David extended to all
+- Isaiah 54:1-10 (5th week): "Sing O barren one"; Zion will have more children; brief abandonment but everlasting compassion; comparison to Noah's flood; "covenant of peace (brit shalom)"; chesed will not depart
+- Isaiah 60:1-22 (6th week): "Arise shine (kumi ori) for your light has come"; nations come to Zion's light; caravans of camels with gold and frankincense; foreigners rebuild Jerusalem's walls; no more need for sun/moon — God = everlasting light
+- Isaiah 61:10-63:9 (7th week): "garments of salvation / robe of righteousness"; Jerusalem's new names = Hephzibah (My delight) and Beulah (Married); God as warrior from Edom in blood-stained garments; "in all their afflictions God was afflicted"
+
+NEVIIM - OTHER SPECIAL HAFTAROT:
+- Hosea 14:2-10 (Shabbat Shuvah, between Rosh Hashanah and Yom Kippur): "Shuvah Yisrael" = Return O Israel; take words (prayer replaces sacrifice); God = dew; Israel blossoms like lily/vine/cedar; ends with wisdom: wise will understand God's ways
+- Isaiah 57:14-58:14 (Yom Kippur morning): God dwells in high place AND with lowly/humble; invalid fast = pursuing business/oppressing workers; TRUE fast = release oppressed/feed hungry/clothe naked/house homeless; "light will break forth like dawn"; Shabbat as delight
+- Judges 4:4-5:31 (Parashat Beshalach): Deborah = prophetess + judge, sits under palm tree; Barak won't go without Deborah → glory goes to woman (Yael); Sisera = 900 iron chariots, flees on foot; Yael kills Sisera with tent peg through temple; Song of Deborah = ancient victory poem; "stars fought against Sisera"; ends with Sisera's mother waiting in vain; read because both Beshalach and Judges 5 have famous victory songs
+- Micah 5:6-6:8 (Parashat Balak): Remnant of Jacob = dew AND lion; God's court case against Israel; "what have I done to you?"; God references Balak and Bilam explicitly; Micah 6:8 = "do justice (mishpat) + love kindness (chesed) + walk humbly with God (hatzne'a lechet)"
+- Hosea 11:7-12:12 (Parashat Vayishlach): God's anguish over Ephraim; "I am God and not a man" = reason compassion overcomes anger; Jacob reviewed: grabbed heel in womb, wrestled God, found at Beit El, wept and sought favor; call to return: keep justice, wait for God
+
+KETUVIM - EICHAH (LAMENTATIONS), read on Tisha B'Av:
+- Chapter 1 (acrostic alef-tav): "Eichah — how does the city sit solitary"; Jerusalem as grieving widow; "is it nothing to you all who pass by?"; Jerusalem admits "The LORD is right, I have rebelled"; 22 verses, each starts with successive Hebrew letter
+- Chapter 2 (acrostic): God as ACTIVE AGENT of destruction; "destroyed His own Temple like an enemy"; false prophets received no vision; mothers boiling children during siege; "pour out your heart like water before God"
+- Chapter 3 (TRIPLE acrostic — 66 verses, most hopeful): "I am the man who has seen affliction"; CENTER OF HOPE: "Chasidei Hashem lo tamnu / His mercies never end / new every morning / great is Your faithfulness (emunah)"; "Let us examine our ways and return to God"; shifts from individual to communal voice
+- Chapter 4 (acrostic): "How the gold has grown dim"; people = once precious gold, now clay pots; even jackals nurse young but famine makes mothers cruel; Nazirites' appearance destroyed; sins of priests and prophets blamed; warning to Edom: your cup comes next
+- Chapter 5 (NOT acrostic — only exception): Communal prayer; "Remember O LORD what has befallen us"; "The crown has fallen from our head"; verse 21 = "Hashivenu Adonai elecha v'nashuva, chadesh yameinu k'kedem" = "Return us to You O LORD and we will return, renew our days as of old"; final verse repeated before last verse so book doesn't end in despair
+
+COMPETITION FORMAT:
+- All three rounds are MULTIPLE CHOICE
+- Test given ORALLY in English
+- Round 1 (Chumash): whiteboard, 6 seconds, 5 points if correct
+- Round 2 (Nevi'im/Ketuvim): content questions AND when/why each reading is used
+- Round 3 (Special Sources): quotes to identify, maftir readings, haftarot, Eichah
+- Tiebreaker: more questions, then write as many books of Tanakh as possible (spelling doesn't count)
+- Prize: $54 to Israel trip fund + $54 to charity of choice + ice cream for kehillah
+
+BOOKS OF TANAKH (39 total): Torah (5): Genesis/Bereshit, Exodus/Shemot, Leviticus/Vayikra, Numbers/Bamidbar, Deuteronomy/Devarim. Nevi'im (21): Joshua, Judges, I&II Samuel, I&II Kings, Isaiah, Jeremiah, Ezekiel, Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi. Ketuvim (13): Psalms, Proverbs, Job, Song of Songs, Ruth, Lamentations/Eichah, Ecclesiastes/Kohelet, Esther, Daniel, Ezra, Nehemiah, I&II Chronicles.
+
+PERSONALITY AND STYLE GUIDELINES:
+- You are warm, encouraging, and fun — this is a middle schooler!
+- Keep answers concise and clear — not too long
+- Use emojis occasionally to make it friendly
+- If they ask you to quiz them, give ONE question at a time, wait for their answer, then give feedback
+- If they get something wrong, be kind and explain gently
+- Highlight the most important/testable facts in bold
+- If they ask about something NOT in the study guide, say so kindly and redirect them
+- Celebrate correct answers enthusiastically!
+- You can use Hebrew words when relevant but always explain them
+- Never be condescending — treat them as a smart, capable student`;
+
+let chatHistory = [];
+let chatOpen = false;
+let isThinking = false;
+let userApiKey = localStorage.getItem('chidon_api_key') || '';
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const win = document.getElementById('ai-chat-window');
+  if (chatOpen) {
+    win.classList.add('open');
+    if (!userApiKey) {
+      showApiKeyScreen();
+    } else {
+      // Key already saved — go straight to chat
+      document.getElementById('apikey-screen').style.display = 'none';
+      document.getElementById('chat-main').style.display = 'flex';
+      document.getElementById('chat-subtitle-text').textContent = 'AI-powered · Knows your whole guide';
+      setTimeout(() => document.getElementById('chat-input').focus(), 100);
+    }
+  } else {
+    win.classList.remove('open');
+  }
+}
+
+function showApiKeyScreen() {
+  document.getElementById('chat-main').style.display = 'none';
+  document.getElementById('apikey-screen').style.display = 'flex';
+  setTimeout(() => document.getElementById('apikey-input').focus(), 100);
+}
+
+function submitApiKey() {
+  const val = document.getElementById('apikey-input').value.trim();
+  if (!val.startsWith('sk-')) {
+    document.getElementById('apikey-error').style.display = 'block';
+    return;
+  }
+  userApiKey = val;
+  localStorage.setItem('chidon_api_key', val);
+  document.getElementById('apikey-error').style.display = 'none';
+  document.getElementById('apikey-screen').style.display = 'none';
+  document.getElementById('chat-main').style.display = 'flex';
+  document.getElementById('chat-subtitle-text').textContent = 'AI-powered · Knows your whole guide';
+  setTimeout(() => document.getElementById('chat-input').focus(), 100);
+}
+
+function clearApiKey() {
+  userApiKey = '';
+  localStorage.removeItem('chidon_api_key');
+  showApiKeyScreen();
+  document.getElementById('apikey-input').value = '';
+  document.getElementById('chat-subtitle-text').textContent = 'Enter your API key to begin';
+}
+
+function sendSuggestion(btn) {
+  document.getElementById('chat-input').value = btn.textContent;
+  document.getElementById('chat-suggested').style.display = 'none';
+  sendMessage();
+}
+
+async function sendMessage() {
+  if (isThinking) return;
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  appendMessage('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  document.getElementById('chat-suggested').style.display = 'none';
+
+  isThinking = true;
+  document.getElementById('chat-send-btn').disabled = true;
+  showTyping(true);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': userApiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data = await response.json();
+    if (data.error) {
+      showTyping(false);
+      if (data.error.type === 'authentication_error') {
+        appendMessage('ai', '🔑 That API key didn\'t work. <span style="color:var(--gold);cursor:pointer;text-decoration:underline;" onclick="clearApiKey()">Try a different key</span>');
+      } else {
+        appendMessage('ai', '❌ Error: ' + data.error.message);
+      }
+    } else {
+      const reply = data.content?.map(b => b.text || '').join('') || "Sorry, I couldn't get a response. Try again!";
+      chatHistory.push({ role: 'assistant', content: reply });
+      showTyping(false);
+      appendMessage('ai', formatAIText(reply));
+    }
+  } catch (err) {
+    showTyping(false);
+    appendMessage('ai', "Oops! Something went wrong. Check your connection and try again. 🙏");
+  }
+
+  isThinking = false;
+  document.getElementById('chat-send-btn').disabled = false;
+  input.focus();
+}
+
+function formatAIText(text) {
+  // Convert **bold** to <strong>, *italic* to <em>, newlines to <br>
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+}
+
+function appendMessage(role, html) {
+  const messages = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  div.innerHTML = html;
+  // Insert before typing indicator
+  const typing = document.getElementById('typing-indicator');
+  messages.insertBefore(div, typing);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function showTyping(show) {
+  const t = document.getElementById('typing-indicator');
+  t.className = show ? 'typing-indicator show' : 'typing-indicator';
+  if (show) {
+    const messages = document.getElementById('chat-messages');
+    messages.scrollTop = messages.scrollHeight;
+  }
+}
+</script>
+</body>
+</html>
